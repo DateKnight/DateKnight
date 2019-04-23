@@ -1,0 +1,45 @@
+/* font-family: 'Poppins', sans-serif;
+font-family: 'Uncial Antiqua', cursive;
+font-family: 'Limelight', cursive; */
+
+body {
+    background-color: #222E50;
+}
+
+.navbar {
+    background-color: #49111C;
+}
+.navbar-brand {
+    font-family: 'Uncial Antiqua', cursive;
+    color: #E0E2E1;
+    
+}
+.jumbotron {
+    background-color: #0A0908;
+    margin: 20px auto;
+    text-align: center;
+    align-content: center;
+    font-family: 'Poppins', sans-serif;
+    color: #E0E2E1;
+}
+
+
+h1 {
+    font-size: 40px;
+    text-align: left;
+}
+
+h2 {
+    font-size: 30px;
+    text-align: right;
+}
+
+.form-group {
+    margin: 10px auto;
+    width: 20%;
+    text-align: center;
+}
+
+.btn {
+    margin: 20px;
+}
