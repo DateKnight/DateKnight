@@ -1,6 +1,9 @@
 // create a function that gets the value on click
+$("#results").empty();
 $("#submit").on("click", function(){
-    $("#results").empty();
+  
+
+ 
     console.log("button clicked")
     var activity = $("#activity-input").val();
     console.log(activity);
