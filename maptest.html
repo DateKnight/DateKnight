@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+    /* Set the size of the div element that contains the map */
+    #map {
+      height: 400px;
+      /* The height is 400 pixels */
+      width: 400px;
+      ;
+      /* The width is the width of the web page */
+    }
+
+    #chicago {
+      height: 400px;
+      /* The height is 400 pixels */
+      width: 400px;
+      /* The width is the width of the web page */
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.4.0.js" integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
+    crossorigin="anonymous"></script>
+
+  <script>
+
+    // $("#tester").text("sup bro");
+    // // Initialize and add the map
+    // function initMap() {
+
+    //   var uluru = { lat: -25.344, lng: 131.036 };
+    //   var map = new google.maps.Map(
+    //     document.getElementById('map'), { zoom: 15, center: uluru });
+    //   // The marker, positioned at Uluru
+    //   var marker = new google.maps.Marker({ position: uluru, map: map });
+    // }
+
+    // function chicagoMap() {
+    //   var chicago = { lat: 41.85, lng: -87.64999999999998 };
+    //   var chicagoMap = new google.maps.Map(
+    //     document.getElementById('chicago'), { zoom: 15, center: chicago });
+    //   var marker = new google.maps.Marker({ position: chicago, map: chicagoMap });
+    // };
+
+    // function start() {
+    //   initMap();
+    //   chicagoMap();
+    // }
+
+      // chicagoMap();
+  </script>
+  <!--Load the API from the specified URL
+          * The async attribute allows the browser to render the page while the API loads
+          * The key parameter will contain your own API key (which is not needed for this tutorial)
+          * The callback parameter executes the initMap() function
+          -->
+  <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXsW8-j2c7OfUisaYLviWfNOheH1bqGa0&callback=chicagoMap"> -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXsW8-j2c7OfUisaYLviWfNOheH1bqGa0">
+  </script>
+</head>
+<body>
+<!-- <body onload=start()> -->
+  <h3>My Google Maps Demo</h3>
+
+  <button id = "clickMe">CLICK ME</button>
+  <!--The div element for the map -->
+  <div id="map"></div>
+  <div id="chicago"></div>
+  <div id = "tester" ></div>
+
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript" src="logic.js"></script>
+
+  
+
+</body>
+
+</html>
+
+
+
+<!-- 
+1. Make sure you have a DIV for each map
+2. Give each div css and specify the size
+3.  Add an event listener-->
