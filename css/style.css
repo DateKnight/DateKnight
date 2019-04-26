@@ -43,3 +43,9 @@ h2 {
 .btn {
     margin: 20px;
 }
+
+#map{
+    height: 500px;
+    width: 600px;
+
+}
