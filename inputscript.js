@@ -12,7 +12,7 @@
 
 
 var locations = []
-
+var userOne = []
 
 // Ambreen - working on hide(); element to separate the Activity and Cuisine search
 $(document).ready(function (){
@@ -107,7 +107,8 @@ function fetchResults(input) {
                 // If our results are 0; no businesses were returned by the JSON therefor we display on the page no results were found
                 $('#announce-results').append('<h5>We discovered no results!</h5>');
             }
-
+            //TODO: Put things that will happen in the AJAX event, but outside of the Loop below here
+            // ------------------------------------------------------------------------------------------
             //TODO: I think i can put the map thingy here
             displayMap();
 
@@ -117,11 +118,25 @@ function fetchResults(input) {
                 var restaurantNameObject = {
                     Name: thisClicked
                 };
-            database.ref().push(restaurantNameObject);
-            // console.log("Leon's this click", thisClicked);
 
+            database.ref().push(restaurantNameObject);
             //TODO: figure out how to push each result into an array. 
             });
+
+            //DONE: Success! Items pushed properly to the database. 
+            database.ref().on("child_added", function (child){
+                let childAdded = child.node_.children_.root_.value.value_
+                userOne.push(childAdded);
+                //userOne is variable that holds the pushed array
+                //This array will prevent duplicate items in the array from being duplicated    
+                var uniqueNames = [];
+                $.each(userOne, function(i, el){
+                    if($.inArray(el, uniqueNames) === -1) uniqueNames.push(el);
+                });
+
+                console.log(uniqueNames);
+            })
+             // ------------------------------------------------------------------------------------------
         }
     });
 
@@ -184,3 +199,4 @@ function displayMap() {
 //     thisClicked = $("this")
 // console.log(thisClicked);
 // });
+
