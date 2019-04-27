@@ -57,7 +57,7 @@
 
                 </select>
             </div>
-            <div class="input-group mb-3">
+            <div class="input-group mb-3" id="cuisine-div">
                 <div class="input-group-prepend">
                     <label class="input-group-text" for="restaurant-input">Cuisine</label>
                 </div>
@@ -68,15 +68,17 @@
                     <option value="Italian">Italian</option>
                 </select>
             </div>
-            <a class="btn btn-primary btn-lg" type="submit" id="submit">Submit</a>
-            <a class="btn btn-primary btn-lg" type="reset" id="reset">Reset</a>
+            <a class="btn btn-primary btn-sm" type="submit" id="submit">Submit</a>
+            <a class="btn btn-primary btn-sm" type="reset" id="reset">Reset</a>
+            <a class="btn btn-primary btn-sm" type="save" id="save">Click here to select a Date Activity</a>
         </div>
         <div class="results-wrapper">
+                <div id="map"></div>
             <div class="announce-results" id="announce-results"></div>
             <div class="results" id="results"></div>
-            <div id="map"></div>
+            <!-- <div id="map"></div> -->
         </div>
-        <a class="btn btn-primary btn-lg" type="save" id="save">Click here to select a Date Activity</a>
+        <!-- <a class="btn btn-primary btn-lg" type="save" id="save">Click here to select a Date Activity</a> -->
     </div>
     
     <script src="inputscript.js"></script>
