@@ -3,16 +3,16 @@ var locations = []
 
 function fetchResults() {
 
-    // console.log("button clicked")
-    // zipcode = $("#inputZip").val();
-    // console.log(zipcode)
-    // activity = $("#activity-input").val();
-
     console.log("button clicked")
-    var zipcode = "60613";
+    zipcode = $("#inputZip").val();
     console.log(zipcode)
-    var activity = "comedy";
-    console.log(activity);
+    activity = $("#activity-input").val();
+
+    // console.log("button clicked")
+    // var zipcode = "60613";
+    // console.log(zipcode)
+    // var activity = "comedy";
+    // console.log(activity);
     var myurl = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=by-" + activity + "&location=" + zipcode + "&limit=10";
     // var btnValue = activityBtn.val();
     console.log(activity);
