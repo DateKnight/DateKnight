@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css?family=Limelight|Poppins|Uncial+Antiqua" rel="stylesheet">
     <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXsW8-j2c7OfUisaYLviWfNOheH1bqGa0"></script>
-
+    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase.js"></script>
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -36,10 +36,10 @@
     <div class="container">
         <div class="inputs">
             <div class="form-group">
-                <label for="inputZip">Zip Code:</label>
+                <label for="inputZip" class="zipcode-label">Zip Code:</label>
                 <input type="text" class="form-control" id="inputZip">
             </div>
-            <div class="input-group mb-3">
+            <div class="input-group mb-3" id="activity-div">
                 <div class="input-group-prepend">
                     <label class="input-group-text" for="inputGroupSelect01">Activity</label>
                 </div>
@@ -48,6 +48,10 @@
                     <option value="comedy" id="comedy">Comedy</option>
                     <option value="museum">Museum</option>
                     <option value="danceclub">Dance Club</option>
+                    <option value="escaperoom">Escape Room</option>
+                    <option value="art">Art</option>
+                    <option value="theatre">Theatre</option>
+
                 </select>
             </div>
             <div class="input-group mb-3">
@@ -56,20 +60,22 @@
                 </div>
                 <select class="custom-select" id="cuisine-input">
                     <option selected id="null-text">Choose...</option>
-                    <option value="1">Thai</option>
-                    <option value="2">Hamburgers</option>
-                    <option value="3">Italian</option>
+                    <option value="Thai">Thai</option>
+                    <option value="Hamburgers">Hamburgers</option>
+                    <option value="Italian">Italian</option>
                 </select>
             </div>
             <a class="btn btn-primary btn-lg" type="submit" id="submit">Submit</a>
+            <a class="btn btn-primary btn-lg" type="reset" id="reset">Reset</a>
         </div>
         <div class="results-wrapper">
             <div class="announce-results" id="announce-results"></div>
             <div class="results" id="results"></div>
             <div id="map"></div>
         </div>
-
+        <a class="btn btn-primary btn-lg" type="save" id="save">Click here to select a Date Activity</a>
     </div>
+    
     <script src="inputscript.js"></script>
 </body>
 

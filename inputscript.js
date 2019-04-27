@@ -1,5 +1,25 @@
+  // Initialize Firebase
+//   var config = {
+//     apiKey: "AIzaSyDol-FwBLa9LmnH0nFd2RqqPGtXFWq6C50",
+//     authDomain: "dateknight-f4122.firebaseapp.com",
+//     databaseURL: "https://dateknight-f4122.firebaseio.com",
+//     projectId: "dateknight-f4122",
+//     storageBucket: "dateknight-f4122.appspot.com",
+//     messagingSenderId: "144687519953"
+//   };
+//   firebase.initializeApp(config);
+
 
 var locations = []
+
+
+// Ambreen - working on hide(); element to separate the Activity and Cuisine search
+$(document).ready(function(){
+    $( "#activity-div" ).hide();
+    $("#save").hide();
+    console.log("what!!")
+})
+
 
 function fetchResults() {
 
@@ -57,8 +77,9 @@ function fetchResults() {
                         <div class="card-body">
                           <h5 class="card-title">${name}</h5>
                           <p class="card-text">${address} ${city} ${state} ${zipcode} ${phone} ${rating}</p>
-                          <a href="${yelpsite}" class="btn btn-primary" target="_blank">View on Yelp</a>
-                        </div>
+                          <a href="${yelpsite}" class="btn btn-primary " target="_blank">View on Yelp</a>
+                          <button class="btn btn-primary likeButton" id="save-selection">I Like This One</button>
+                          </div>
                       </div>
                     `;
 
@@ -72,22 +93,34 @@ function fetchResults() {
 
             //TODO: I think i can put the map thingy here
             displayMap();
+
+            $(".likeButton").on("click", function(){
+                thisClicked = $("this").attr(name);
+            console.log("Leon's this click", thisClicked);
+            });
+            
         }
     });
 
 }
+// Reset button function
+$(document).on("click", "#reset" , function() {
+    console.log("Aloha!!!");
+    $("#results").empty();
+    $("#map").empty();
+    $("#announce-results").empty();
+    $("#inputZip").val("");
+    $("#activity-input").prop("selectedIndex",0);
+    $("#cuisine-input").prop("selectedIndex",0);
+    
+    
+    });
 //Leon created the dataVar and set it global to = the 'data' from the JSON object. This way he can manipulate the data within the displayMap(); function */
 var dataVar = ""
 // create a function that gets the value on click
 $("#results").empty();
-$(document).ready(fetchResults)
 $("#submit").on("click", fetchResults);
 
-function renderResults() {
-    $
-    
-    
-}
 
 function displayMap() {
     console.log("Leon's Locations var:", locations);
@@ -117,3 +150,8 @@ function displayMap() {
         })(marker, i));
     }
 };
+
+// $(".likeButton").on("click", function(){
+//     thisClicked = $("this")
+// console.log(thisClicked);
+// });
