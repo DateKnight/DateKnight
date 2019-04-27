@@ -4,7 +4,7 @@ font-family: 'Limelight', cursive; */
 
 body {
     width: 100%;
-    background-color: #222E50;
+    background-color: #6e3667;
 }
 
 .navbar {
@@ -16,7 +16,7 @@ body {
     
 }
 .jumbotron {
-    background-color: #0A0908;
+    background-color: #1a0315;
     margin: 20px auto;
     text-align: center;
     align-content: center;
@@ -39,6 +39,10 @@ h2 {
     margin: 10px auto;
     width: 20%;
     text-align: center;
+}
+
+.zipcode-label {
+    color: white;
 }
 
 .results-wrapper {
@@ -65,9 +69,7 @@ h2 {
     margin: 10px;
 }
 
-/* .card-img-top {
-    height: 50%;
-} */
+
 
 .btn {
     margin: 20px;

@@ -1,13 +1,14 @@
-  // Initialize Firebase
-//   var config = {
-//     apiKey: "AIzaSyDol-FwBLa9LmnH0nFd2RqqPGtXFWq6C50",
-//     authDomain: "dateknight-f4122.firebaseapp.com",
-//     databaseURL: "https://dateknight-f4122.firebaseio.com",
-//     projectId: "dateknight-f4122",
-//     storageBucket: "dateknight-f4122.appspot.com",
-//     messagingSenderId: "144687519953"
-//   };
-//   firebase.initializeApp(config);
+//   Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDol-FwBLa9LmnH0nFd2RqqPGtXFWq6C50",
+    authDomain: "dateknight-f4122.firebaseapp.com",
+    databaseURL: "https://dateknight-f4122.firebaseio.com",
+    projectId: "dateknight-f4122",
+    storageBucket: "dateknight-f4122.appspot.com",
+    messagingSenderId: "144687519953"
+  };
+  firebase.initializeApp(config);
+  var database = firebase.database();
 
 
 var locations = []
@@ -78,13 +79,15 @@ function fetchResults() {
                           <h5 class="card-title">${name}</h5>
                           <p class="card-text">${address} ${city} ${state} ${zipcode} ${phone} ${rating}</p>
                           <a href="${yelpsite}" class="btn btn-primary " target="_blank">View on Yelp</a>
-                          <button class="btn btn-primary likeButton" id="save-selection">I Like This One</button>
+                          <button class="btn btn-primary likeButton" id="save-selection" data-name="${name}">I Like This One</button>
                           </div>
                       </div>
                     `;
 
                     // Append our result into our page
                     $('#results').append(resultHtml);
+
+                    
                 });
             } else {
                 // If our results are 0; no businesses were returned by the JSON therefor we display on the page no results were found
@@ -95,10 +98,16 @@ function fetchResults() {
             displayMap();
 
             $(".likeButton").on("click", function(){
-                thisClicked = $("this").attr(name);
-            console.log("Leon's this click", thisClicked);
+                // We will push thisClicked to firebase
+                thisClicked = $(this).data("name")
+                var restaurantNameObject = {
+                    Name: thisClicked
+                };
+            database.ref().push(restaurantNameObject);
+            // console.log("Leon's this click", thisClicked);
+
+            //TODO: figure out how to push each result into an array. 
             });
-            
         }
     });
 
