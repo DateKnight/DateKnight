@@ -3,6 +3,7 @@ font-family: 'Uncial Antiqua', cursive;
 font-family: 'Limelight', cursive; */
 
 body {
+    width: 100%;
     background-color: #222E50;
 }
 
@@ -40,6 +41,34 @@ h2 {
     text-align: center;
 }
 
+.results-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.results {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: flex-start;
+}
+
+.announce-results {
+    color: white;
+    margin: auto;
+    text-align: center;
+}
+
+.card {
+    width: 30%;
+    margin: 10px;
+}
+
+/* .card-img-top {
+    height: 50%;
+} */
+
 .btn {
     margin: 20px;
 }
@@ -47,5 +76,5 @@ h2 {
 #map{
     height: 500px;
     width: 600px;
-
+    margin: 10px auto;
 }
