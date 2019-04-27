@@ -14,28 +14,42 @@ var locations = []
 
 
 // Ambreen - working on hide(); element to separate the Activity and Cuisine search
-$(document).ready(function(){
+$(document).ready(function (){
     $( "#activity-div" ).hide();
     $("#save").hide();
     console.log("what!!")
 })
 
+// This is for the "Click Here to select a Date Activity" button
+$(document).on("click", "#save" , function() {
+    $("#cuisine-div").hide();
+    $("#activity-div").show();
+    resetResults();
+       
+    });
 
-function fetchResults() {
+
+function fetchResults(input) {
+   
+   // this will display the Activity input field and the "Click here to select a Date Activity" button
+    $("#save").show();
+   
 
     console.log("button clicked")
     zipcode = $("#inputZip").val();
     console.log(zipcode)
     activity = $("#activity-input").val();
+    cuisine = $("#cuisine-input").val();
 
-    // console.log("button clicked")
-    // var zipcode = "60613";
-    // console.log(zipcode)
-    // var activity = "comedy";
-    // console.log(activity);
-    var myurl = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=by-" + activity + "&location=" + zipcode + "&limit=10";
+    if (activity == "Choose...") {
+        input = cuisine;
+    } else {
+        input = activity;
+    }
+    
+    var myurl = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=by-" + input + "&location=" + zipcode + "&limit=3";
     // var btnValue = activityBtn.val();
-    console.log(activity);
+    console.log(input);
     $.ajax({
         url: myurl,
         headers: {
@@ -106,15 +120,21 @@ function fetchResults() {
 // Reset button function
 $(document).on("click", "#reset" , function() {
     console.log("Aloha!!!");
-    $("#results").empty();
-    $("#map").empty();
-    $("#announce-results").empty();
-    $("#inputZip").val("");
-    $("#activity-input").prop("selectedIndex",0);
-    $("#cuisine-input").prop("selectedIndex",0);
-    
+   resetResults();
+   $("#cuisine-div").show();
+   $("#activity-div").hide();
+
     
     });
+
+    function resetResults() {
+        $("#results").empty();
+        $("#map").empty();
+        $("#announce-results").empty();
+        $("#inputZip").val("");
+        $("#activity-input").prop("selectedIndex",0);
+        $("#cuisine-input").prop("selectedIndex",0);
+    }
 //Leon created the dataVar and set it global to = the 'data' from the JSON object. This way he can manipulate the data within the displayMap(); function */
 var dataVar = ""
 // create a function that gets the value on click
