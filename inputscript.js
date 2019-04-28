@@ -11,8 +11,12 @@
   var database = firebase.database();
 
 
+
 var locations = []
 var userOne = []
+var userTwo = []
+var uniqueNames = [];
+var uniqueActivities = [];
 
 // Ambreen - working on hide(); element to separate the Activity and Cuisine search
 $(document).ready(function (){
@@ -93,7 +97,9 @@ function fetchResults(input) {
                           <h5 class="card-title">${name}</h5>
                           <p class="card-text">${address} ${city} ${state} ${zipcode} ${phone} ${rating}</p>
                           <a href="${yelpsite}" class="btn btn-primary " target="_blank">View on Yelp</a>
-                          <button class="btn btn-primary likeButton" id="save-selection" data-name="${name}">I Like This One</button>
+                          <button class="btn btn-primary likeRestaurantButton" id="save-selection" data-name="${name} ">I Like This Restaurant</button>
+                          <button class="btn btn-primary likeActivitiesButton" id="save-selection" data-name="${name} ">I Like This Activity</button>
+
                           </div>
                       </div>
                     `;
@@ -107,35 +113,100 @@ function fetchResults(input) {
                 // If our results are 0; no businesses were returned by the JSON therefor we display on the page no results were found
                 $('#announce-results').append('<h5>We discovered no results!</h5>');
             }
+
             //TODO: Put things that will happen in the AJAX event, but outside of the Loop below here
             // ------------------------------------------------------------------------------------------
-            //TODO: I think i can put the map thingy here
+            //DONE: Display the map
             displayMap();
 
-            $(".likeButton").on("click", function(){
+            $(".likeRestaurantButton").on("click", function(){
                 // We will push thisClicked to firebase
                 thisClicked = $(this).data("name")
                 var restaurantNameObject = {
                     Name: thisClicked
                 };
-
-            database.ref().push(restaurantNameObject);
-            //TODO: figure out how to push each result into an array. 
+            //DONE push the selected items into an array
+            database.ref("/restaurants").push(restaurantNameObject);
+        
             });
 
             //DONE: Success! Items pushed properly to the database. 
-            database.ref().on("child_added", function (child){
+            database.ref("/restaurants").on("child_added", function (child){
                 let childAdded = child.node_.children_.root_.value.value_
                 userOne.push(childAdded);
                 //userOne is variable that holds the pushed array
                 //This array will prevent duplicate items in the array from being duplicated    
-                var uniqueNames = [];
+           
                 $.each(userOne, function(i, el){
                     if($.inArray(el, uniqueNames) === -1) uniqueNames.push(el);
                 });
 
                 console.log(uniqueNames);
             })
+
+
+
+            $(".likeActivitiesButton").on("click", function(){
+                // We will push thisClicked to firebase
+                thisClicked = $(this).data("name")
+                var activitiesNameObject = {
+                    Name: thisClicked
+                };
+            //DONE push the selected items into an array
+            database.ref("/activities").push(activitiesNameObject);
+        
+            });
+
+            //DONE: Success! Items pushed properly to the database. 
+            database.ref("/activities").on("child_added", function (child){
+                let childAddedActivities = child.node_.children_.root_.value.value_
+                userTwo.push(childAddedActivities);
+                //userOne is variable that holds the pushed array
+                //This array will prevent duplicate items in the array from being duplicated    
+           
+                $.each(userTwo, function(i, elel){
+                    if($.inArray(elel, uniqueActivities) === -1) uniqueActivities.push(elel);
+                });
+
+                console.log(uniqueActivities);
+            })
+
+
+            //TODO: Clear the uniqueNames array to [];
+            $("#resetArray").on("click", function(){
+                //The below line will clear the database!
+                database.ref().remove();
+                userOne = [];
+                userTwo = [];
+                uniqueNames = [];
+                uniqueActivities = [];
+                // console.log("the current array is this after clearArray", uniqueNames)
+                //Clear the array
+//TODO: BUG!! THe array doesn't clear immediately, but the firebase does. However a refresh will clear the array. 
+            })
+
+            database.ref().on("child_removed", function(){
+                userOne = [];
+                userTwo = [];
+                uniqueNames = [];
+                uniqueActivities = [];
+                // console.log("uniqueNames should be a fresh array", uniqueNames);
+
+
+            })
+
+            //TODO: Have the date knight picka  random thing and output it. 
+            $("#pickDate").on("click", function(){
+
+            var dkPickRestaurant = uniqueNames[Math.floor(Math.random() * uniqueNames.length)];
+            $("#dkRestaurantPick").text("The Restaurant you should eat at is: " + dkPickRestaurant);
+            var dkPickActivity = uniqueActivities[Math.floor(Math.random() * uniqueActivities.length)];
+            $("#dkActivityPick").text("The thing you two should do after is: " + dkPickActivity)
+
+            })
+            
+
+
              // ------------------------------------------------------------------------------------------
         }
     });

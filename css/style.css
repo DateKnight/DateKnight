@@ -80,3 +80,8 @@ h2 {
     width: 600px;
     margin: 10px auto;
 }
+
+.resultsDiv {
+    font-size: 30px;
+    color: white
+}
