@@ -116,7 +116,7 @@ function fetchResults(input) {
     }
 
     var myurl = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=by-" + input + "&location=" + zipcode + "&limit=3";
-    // var btnValue = activityBtn.val();
+  
     console.log(input);
     $.ajax({
         url: myurl,
@@ -130,7 +130,8 @@ function fetchResults(input) {
             dataVar = data
             var totalResults = data.total;
             console.log("Results: ", data);
-            // If our results are greater than 0, continue
+
+            //this is what calls the rendering of the results on the html:
             renderResults(resultType, totalResults, data);
 
 
