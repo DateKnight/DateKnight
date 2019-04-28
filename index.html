@@ -36,7 +36,7 @@
                 </a>
             </nav>
         </header>
-        <div class="jumbotron">
+        <div class="speechbubble-container">
             <div class="speech-bubble1">
                 <h1>
                     "What do you want to do tonight?..."
@@ -45,72 +45,80 @@
             <div class="speech-bubble2">
                 <h2>
                     "...I dunno, what do you wanna do?"
-                    </h1>
-                    <hr class="my-4">
+                </h2>
+
             </div>
+
+        </div>
+
+
+        <!--Animated Knight-->
+        <!-- <div id ="myContainer">
+    <div id ="myAnimation">My animation will go here</div>
+</div> -->
+
+
+        <div class="input-container">
             <p>
                 Let the Date Knight plan your date!
             </p>
+            <div class="inputs">
+                <div class="form-group">
+                    <label for="inputZip" class="zipcode-label">Zip Code:</label>
+                    <input type="text" class="form-control" id="inputZip">
+                </div>
+                <div class="input-group mb-3" id="activity-div">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Activity</label>
+                    </div>
+                    <select class="custom-select" id="activity-input">
+                        <option selected>Choose...</option>
+                        <option value="comedy" id="comedy">Comedy</option>
+                        <option value="museum">Museum</option>
+                        <option value="danceclub">Dance Club</option>
+                        <option value="escaperoom">Escape Room</option>
+                        <option value="art">Art</option>
+                        <option value="theatre">Theatre</option>
+
+                    </select>
+                </div>
+                <div class="input-group mb-3" id="cuisine-div">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="restaurant-input">Cuisine</label>
+                    </div>
+                    <select class="custom-select" id="cuisine-input">
+                        <option selected id="null-text" class="menu">Choose...</option>
+                        <option value="Thai">Thai</option>
+                        <option value="Hamburgers">Hamburgers</option>
+                        <option value="Italian">Italian</option>
+                    </select>
+                </div>
+                <a class="btn btn-primary btn-sm" type="submit" id="submit">Submit</a>
+                <a class="btn btn-primary btn-sm" type="reset" id="reset">Reset</a>
+                <a class="btn btn-primary btn-sm" type="save" id="save">Click here to select a Date Activity</a>
+            </div>
+            <div class="results-wrapper">
+                <div id="map"></div>
+                <div class="announce-results" id="announce-results"></div>
+                <div class="results" id="results"></div>
+                <!-- <div id="map"></div> -->
+            </div>
+            <div class="date-knight-picks" id="date-knight-picks">
+                <button id="pickDate" class="pickDate">DATE PICKER</button>
+                <button id="resetArray" class="resetArray">Reset Array</button>
+                <br>
+                <div class="resultsDiv">The Date Knight Picks:</div>
+                <br>
+                <div id="dkRestaurantPick" class="resultsDiv"></div>
+                <div id="dkActivityPick" class="resultsDiv"></div>
+            </div>
+
+
+            <!-- <a class="btn btn-primary btn-lg" type="save" id="save">Click here to select a Date Activity</a> -->
         </div>
+        <div id="modal-content"></div>
 
     </div>
-    <div class="container">
-        <div class="inputs">
-            <div class="form-group">
-                <label for="inputZip" class="zipcode-label">Zip Code:</label>
-                <input type="text" class="form-control" id="inputZip">
-            </div>
-            <div class="input-group mb-3" id="activity-div">
-                <div class="input-group-prepend">
-                    <label class="input-group-text" for="inputGroupSelect01">Activity</label>
-                </div>
-                <select class="custom-select" id="activity-input">
-                    <option selected>Choose...</option>
-                    <option value="comedy" id="comedy">Comedy</option>
-                    <option value="museum">Museum</option>
-                    <option value="danceclub">Dance Club</option>
-                    <option value="escaperoom">Escape Room</option>
-                    <option value="art">Art</option>
-                    <option value="theatre">Theatre</option>
-
-                </select>
-            </div>
-            <div class="input-group mb-3" id="cuisine-div">
-                <div class="input-group-prepend">
-                    <label class="input-group-text" for="restaurant-input">Cuisine</label>
-                </div>
-                <select class="custom-select" id="cuisine-input">
-                    <option selected id="null-text">Choose...</option>
-                    <option value="Thai">Thai</option>
-                    <option value="Hamburgers">Hamburgers</option>
-                    <option value="Italian">Italian</option>
-                </select>
-            </div>
-            <a class="btn btn-primary btn-sm" type="submit" id="submit">Submit</a>
-            <a class="btn btn-primary btn-sm" type="reset" id="reset">Reset</a>
-            <a class="btn btn-primary btn-sm" type="save" id="save">Click here to select a Date Activity</a>
-        </div>
-        <div class="results-wrapper">
-            <div id="map"></div>
-            <div class="announce-results" id="announce-results"></div>
-            <div class="results" id="results"></div>
-            <!-- <div id="map"></div> -->
-
-            <button id="pickDate">DATE PICKER</button>
-            <button id="resetArray">Reset Array</button>
-            <br>
-            <div class="resultsDiv">The Date Knight Picks:</div>
-            <br>
-            <div id="dkRestaurantPick" class="resultsDiv"></div>
-            <div id="dkActivityPick" class="resultsDiv"></div>
-
-        </div>
-
-        <!-- <a class="btn btn-primary btn-lg" type="save" id="save">Click here to select a Date Activity</a> -->
-    </div>
-    <div id="modal-content"></div>
-
-
 
     <script src="inputscript.js"></script>
 </body>

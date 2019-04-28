@@ -22,6 +22,7 @@ var uniqueActivities = [];
 $(document).ready(function () {
     $("#activity-div").hide();
     $("#save").hide();
+    $("#date-knight-picks").hide();
     console.log("what!!")
 })
 
@@ -34,6 +35,7 @@ $(document).on("click", "#save", function () {
 });
 //created function to render results
 function renderResults(resultType, totalResults, data) {
+    $("#date-knight-picks").show();
     if (totalResults > 0) {
         // Display a header on the page with the number of results
         $('#announce-results').append("Here are the results!");
@@ -239,8 +241,6 @@ $(document).on("click", "#reset", function () {
     resetResults();
     $("#cuisine-div").show();
     $("#activity-div").hide();
-
-
 });
 
 function resetResults() {
@@ -292,3 +292,21 @@ function displayMap() {
 // console.log(thisClicked);
 // });
 
+
+
+//Animated Knight 
+
+// function myMove() {
+//     var elem = document.getElementById("myAnimation"); 
+//     var pos = 0;
+//     var id = setInterval(frame, 10);
+//     function frame() {
+//       if (pos == 350) {
+//         clearInterval(id);
+//       } else {
+//         pos++; 
+//         elem.style.top = pos + 'px'; 
+//         elem.style.left = pos + 'px'; 
+//       }
+//     }
+//   }
