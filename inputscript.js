@@ -23,7 +23,10 @@ $(document).ready(function () {
     $("#activity-div").hide();
     $("#save").hide();
     $("#date-knight-picks").hide();
-    console.log("what!!")
+    $(".results-wrapper").hide();
+    
+   
+    // console.log("what!!")
 })
 
 // This is for the "Click Here to select a Date Activity" button
@@ -102,7 +105,13 @@ function fetchResults(input) {
     // this will display the Activity input field and the "Click here to select a Date Activity" button
     $("#save").show();
 
+    // display the map div
+    $("#map").show();
 
+    // display the results wrapper div
+    
+
+    
     console.log("button clicked")
     zipcode = $("#inputZip").val();
     console.log(zipcode)
@@ -136,7 +145,8 @@ function fetchResults(input) {
             //this is what calls the rendering of the results on the html:
             renderResults(resultType, totalResults, data);
 
-
+// this scrolls to the results div once the results are displayed
+$("#results").get(0).scrollIntoView();
             //TODO: Put things that will happen in the AJAX event, but outside of the Loop below here
             // ------------------------------------------------------------------------------------------
             //DONE: Display the map
@@ -256,15 +266,11 @@ var dataVar = ""
 // create a function that gets the value on click
 $("#results").empty();
 $("#submit").on("click", fetchResults );
-$("#submit").on("click", displayResultDiv);
 
 
-// create a function that shifts focus on the results div
-function displayResultDiv() {
-    var resultDiv = document.getElementById("results");
-    resultDiv.scrollIntoView();
-    
-}
+
+
+
 
 
 function displayMap() {
