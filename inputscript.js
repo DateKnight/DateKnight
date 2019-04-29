@@ -255,7 +255,16 @@ function resetResults() {
 var dataVar = ""
 // create a function that gets the value on click
 $("#results").empty();
-$("#submit").on("click", fetchResults);
+$("#submit").on("click", fetchResults );
+$("#submit").on("click", displayResultDiv);
+
+
+// create a function that shifts focus on the results div
+function displayResultDiv() {
+    var resultDiv = document.getElementById("results");
+    resultDiv.scrollIntoView();
+    
+}
 
 
 function displayMap() {
