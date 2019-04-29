@@ -11,11 +11,22 @@
     <link href="https://fonts.googleapis.com/css?family=Limelight|Poppins|Uncial+Antiqua" rel="stylesheet">
     <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXsW8-j2c7OfUisaYLviWfNOheH1bqGa0"></script>
-
+    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase.js"></script>
     <link rel="stylesheet" href="css/style.css">
+
+    <!-- Ambreen added this to create a modal -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+    <!-- Ambreen added these to create a modal -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 </head>
 
 <body>
+
+
+
+
     <div class="container">
         <header>
             <nav class="navbar">
@@ -25,51 +36,90 @@
                 </a>
             </nav>
         </header>
-        <div class="jumbotron">
-            <h1>"What do you want to do tonight?..."</h1>
-            <h2>"...I dunno, what do you want to do?"</h1>
-                <hr class="my-4">
-                <p>Let the Date Knight choose your date!</p>
+        <div class="speechbubble-container">
+            <div class="speech-bubble1">
+                <h1>
+                    "What do you want to do tonight?..."
+                </h1>
+            </div>
+            <div class="speech-bubble2">
+                <h2>
+                    "...I dunno, what do you wanna do?"
+                </h2>
+
+            </div>
+
         </div>
 
-    </div>
-    <div class="container">
-        <div class="inputs">
-            <div class="form-group">
-                <label for="inputZip">Zip Code:</label>
-                <input type="text" class="form-control" id="inputZip">
-            </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <label class="input-group-text" for="inputGroupSelect01">Activity</label>
+
+        <!--Animated Knight-->
+        <!-- <div id ="myContainer">
+    <div id ="myAnimation">My animation will go here</div>
+</div> -->
+
+
+        <div class="input-container">
+            <p>
+                Let the Date Knight plan your date!
+            </p>
+            <div class="inputs">
+                <div class="form-group">
+                    <label for="inputZip" class="zipcode-label">Zip Code:</label>
+                    <input type="text" class="form-control" id="inputZip">
                 </div>
-                <select class="custom-select" id="activity-input">
-                    <option selected>Choose...</option>
-                    <option value="comedy" id="comedy">Comedy</option>
-                    <option value="museum">Museum</option>
-                    <option value="danceclub">Dance Club</option>
-                </select>
-            </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <label class="input-group-text" for="restaurant-input">Cuisine</label>
+                <div class="input-group mb-3" id="activity-div">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Activity</label>
+                    </div>
+                    <select class="custom-select" id="activity-input">
+                        <option selected>Choose...</option>
+                        <option value="comedy" id="comedy">Comedy</option>
+                        <option value="museum">Museum</option>
+                        <option value="danceclub">Dance Club</option>
+                        <option value="escaperoom">Escape Room</option>
+                        <option value="art">Art</option>
+                        <option value="theatre">Theatre</option>
+
+                    </select>
                 </div>
-                <select class="custom-select" id="cuisine-input">
-                    <option selected id="null-text">Choose...</option>
-                    <option value="1">Thai</option>
-                    <option value="2">Hamburgers</option>
-                    <option value="3">Italian</option>
-                </select>
+                <div class="input-group mb-3" id="cuisine-div">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="restaurant-input">Cuisine</label>
+                    </div>
+                    <select class="custom-select" id="cuisine-input">
+                        <option selected id="null-text" class="menu">Choose...</option>
+                        <option value="Thai">Thai</option>
+                        <option value="Hamburgers">Hamburgers</option>
+                        <option value="Italian">Italian</option>
+                    </select>
+                </div>
+                <a class="btn btn-primary btn-sm" type="submit" id="submit">Submit</a>
+                <a class="btn btn-primary btn-sm" type="reset" id="reset">Reset</a>
+                <a class="btn btn-primary btn-sm" type="save" id="save">Click here to select a Date Activity</a>
             </div>
-            <a class="btn btn-primary btn-lg" type="submit" id="submit">Submit</a>
+            <div class="results-wrapper">
+                <div id="map"></div>
+                <div class="announce-results" id="announce-results"></div>
+                <div class="results" id="results"></div>
+                <!-- <div id="map"></div> -->
+            </div>
+            <div class="date-knight-picks" id="date-knight-picks">
+                <button id="pickDate" class="pickDate">DATE PICKER</button>
+                <button id="resetArray" class="resetArray">Reset Array</button>
+                <br>
+                <div class="resultsDiv">The Date Knight Picks:</div>
+                <br>
+                <div id="dkRestaurantPick" class="resultsDiv"></div>
+                <div id="dkActivityPick" class="resultsDiv"></div>
+            </div>
+
+
+            <!-- <a class="btn btn-primary btn-lg" type="save" id="save">Click here to select a Date Activity</a> -->
         </div>
-        <div class="results-wrapper">
-            <div class="announce-results" id="announce-results"></div>
-            <div class="results" id="results"></div>
-            <div id="map"></div>
-        </div>
+        <div id="modal-content"></div>
 
     </div>
+
     <script src="inputscript.js"></script>
 </body>
 

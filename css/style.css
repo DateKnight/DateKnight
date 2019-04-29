@@ -1,44 +1,107 @@
 /* font-family: 'Poppins', sans-serif;
 font-family: 'Uncial Antiqua', cursive;
 font-family: 'Limelight', cursive; */
+/* Background image*/
+
 
 body {
-    width: 100%;
-    background-color: #222E50;
-}
+    background-image: url(../images/background.jpg);
+    width: 100%; 
+    top: 0; 
+    left: 0; 
+    min-width: 100%;
+    min-height: 100%;
+    }
 
-.navbar {
-    background-color: #49111C;
-}
 .navbar-brand {
     font-family: 'Uncial Antiqua', cursive;
     color: #E0E2E1;
+    font-size: 26px;
     
 }
-.jumbotron {
-    background-color: #0A0908;
+.speechbubble-container {
     margin: 20px auto;
     text-align: center;
     align-content: center;
     font-family: 'Poppins', sans-serif;
-    color: #E0E2E1;
+    color: #1a0315;
+}
+.speech-bubble1 {
+	position: relative;
+	background: #E4B7E5;
+    border-radius: .4em;
+    width: fit-content;
+    margin: 40px 0;
 }
 
+.speech-bubble1:after {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 50%;
+	width: 0;
+	height: 0;
+	border: 38px solid transparent;
+	border-right-color: #E4B7E5;
+	border-left: 0;
+	border-top: 0;
+	margin-top: -8.5px;
+	margin-left: -17px;
+}
+
+.speech-bubble2 {
+	position: relative;
+	background: #E4B7E5;
+    border-radius: .4em;
+    margin-left: 500px;
+    
+}
+
+.speech-bubble2:after {
+	content: '';
+	position: absolute;
+	right: 0;
+	top: 50%;
+	width: 0;
+	height: 0;
+	border: 38px solid transparent;
+	border-left-color: #E4B7E5;
+	border-right: 0;
+	border-bottom: 0;
+	margin-top: -8.5px;
+	margin-right: -17px;
+}
 
 h1 {
+    padding: 20px;
     font-size: 40px;
     text-align: left;
+    color:#1a0315;
 }
 
 h2 {
+    padding: 20px;
     font-size: 30px;
     text-align: right;
+}
+
+p {
+color: #84C318;
 }
 
 .form-group {
     margin: 10px auto;
     width: 20%;
     text-align: center;
+}
+
+.input-container {
+    align-content: center;
+    text-align: center;
+}
+
+.zipcode-label {
+    color: #84C318;
 }
 
 .results-wrapper {
@@ -63,18 +126,59 @@ h2 {
 .card {
     width: 30%;
     margin: 10px;
+    background-color: #E4B7E5;
+    border: 3px solid #1a0315;
+    border-radius: 8px;
 }
 
-/* .card-img-top {
-    height: 50%;
-} */
+.card-title {
+    color: #1a0315;
+}
+.card-text {
+    color: purple;
+}
 
 .btn {
-    margin: 20px;
+    margin: 10px;
+    color: #84C318;
+    background-color: purple;
+    border-color: #1a0315;
 }
 
-#map{
+.btn:hover {
+    background-color: #84C318;
+}
+
+
+#map {
     height: 500px;
     width: 600px;
     margin: 10px auto;
 }
+
+.resultsDiv {
+    font-size: 30px;
+    color: white;
+}
+
+
+/* Animated knight*/
+/* #myContainer {
+    width: 400px;
+    height: 400px;
+    position: relative;
+    background: yellow;
+  }
+  
+  #myAnimation {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    background: red;
+  } */
+
+/* cursor*/
+
+.module {
+    cursor: url('../images/Cursor.png'), auto;	
+  }
