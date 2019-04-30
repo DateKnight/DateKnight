@@ -62,51 +62,38 @@ function renderResults(resultType, totalResults, data) {
             // console.log("Leon's coordinates test", coordinates);
             locations.push(coordinates);
 
-
-
-
-
-        // THIS IS THE CORRECT CODE FOR THE CARDS
-            // var restaurantResultHtml = `
-            //             <div class="card">
-            //             <img src="${image}" class="card-img-top" alt="${name}">
-            //             <div class="card-body">
-            //               <h5 class="card-title">${name}</h5>
-            //               <p class="card-text">${address} ${city} ${state} ${zipcode} ${phone} ${rating}</p>
-            //               <a href="${yelpsite}" class="btn btn-primary " target="_blank">View on Yelp</a>
-            //               <button class="btn btn-primary likeRestaurantButton" id="save-selection" data-name="${name} ">I Like This Restaurant</button>
-            //               </div>
-            //           </div>
-            //         `;
-            // var activityResultHtml = `
-            //         <div class="card">
-            //             <img src="${image}" class="card-img-top" alt="${name}">
-            //             <div class="card-body">
-            //               <h5 class="card-title">${name}</h5>
-            //               <p class="card-text">${address} ${city} ${state} ${zipcode} ${phone} ${rating}</p>
-            //               <a href="${yelpsite}" class="btn btn-primary " target="_blank">View on Yelp</a>
-            //               <button class="btn btn-primary likeActivitiesButton" id="save-selection" data-name="${name} ">I Like This Activity</button>
-            //               </div>
-            //           </div>
-            //           `;
-
-        // THIS IS JUST FOR TESTING!
             var restaurantResultHtml = `
-            <div class="card">
-            <img src="${image}" class="card-img-top" alt="${name}">
-          </div>
+                <div class="card">
+                    <a href="#ex1" rel="modal:open">
+                    <img src="${image}" class="card-img-top" alt="${name}">
+                    </a>
+                    <div id="ex1" class="modal">
+                    <h5 class="card-title">${name}</h5>
+                    <p class="card-text">${address} <br> ${city} , ${state} ${zipcode} <br> ${phone} <br> Rating: ${rating}</p>
+                    <a href="${yelpsite}" class="btn btn-primary " target="_blank">View on Yelp</a>
+                    <button class="btn btn-primary likeRestaurantButton" id="save-selection" data-name="${name} ">I Like This Restaurant</button>
+                    <br><br>
+                    <a href="#" rel="modal:close">Close</a>
+                    </div>
+                </div>
         `;
             var activityResultHtml = `
-        <div class="card">
-        <img src="${image}" class="card-img-top" alt="${name}">
-      </div>
+                <div class="card">
+                    <a href="#ex1" rel="modal:open">
+                    <img src="${image}" class="card-img-top" alt="${name}">
+                    </a>
+                    <div id="ex1" class="modal">
+                    <h5 class="card-title">${name}</h5>
+                    <p class="card-text">${address} <br> ${city} , ${state} ${zipcode} <br> ${phone} <br> Rating: ${rating}</p>
+                    <a href="${yelpsite}" class="btn btn-primary " target="_blank">View on Yelp</a>
+                    <button class="btn btn-primary likeActivitiesButton" id="save-selection" data-name="${name} ">I Like This Activity</button> 
+                    <br><br>
+                    <a href="#" rel="modal:close">Close</a>
+                    </div>
+                </div>
       `;
 
-      // Ambreen testing Modal
-      $(document).on("click", ".card-img-top" , function(){
-console.log("AMBREEEEEEEEN!!!!!");
-$("#modal").show();
-      });
+       
 
 
             // Append our result into our page
@@ -174,7 +161,7 @@ function fetchResults(input) {
             // this scrolls to the results div once the results are displayed
             var scroll = document.getElementById("announce-results");
             scroll.scrollIntoView({ behavior: "smooth" });
-            
+
             //TODO: Put things that will happen in the AJAX event, but outside of the Loop below here
             // ------------------------------------------------------------------------------------------
             //DONE: Display the map
