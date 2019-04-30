@@ -297,6 +297,7 @@ function displayMap() {
                     <strong>Phone No: </strong>${markerPhone}<br>
                     <strong>Rating: </strong>${markerRating}<br>
                     <strong># of Reviews: </strong>${markerCount}</p>`
+
                 infowindow.open(map, marker);
                 infowindow.setContent(markerContent);
             }
