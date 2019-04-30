@@ -15,7 +15,7 @@ body {
 
 .navbar-brand {
     font-family: 'Uncial Antiqua', cursive;
-    color: #E0E2E1;
+    color: #84C318;
     font-size: 26px;
     
 }
@@ -85,8 +85,10 @@ h2 {
     text-align: right;
 }
 
-p {
-color: #84C318;
+h3 {
+    font-size: 40px;
+    font-family: 'Uncial Antiqua', cursive;
+    color: #84C318;
 }
 
 .form-group {
@@ -100,19 +102,19 @@ color: #84C318;
     text-align: center;
 }
 
-.zipcode-label {
+/* .zipcode-label {
     color: #84C318;
-}
+} */
 
 .results-wrapper {
-    display: flex;
-    flex-direction: column;
+    /* display: flex;
+    flex-direction: column; */
 }
 
 .results {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    /* display: flex;
+    flex-direction: column;
+    flex-wrap: wrap; */
     justify-content: space-between;
     align-content: flex-start;
 }
@@ -124,11 +126,18 @@ color: #84C318;
 }
 
 .card {
-    width: 30%;
+    width: 100%;
     margin: 10px;
     background-color: #E4B7E5;
-    border: 3px solid #1a0315;
+    border: 3px solid #84C318;
     border-radius: 8px;
+}
+
+.card .card-img-top {
+    width: 100%;
+    height: 200px;
+    image-rendering: auto;
+    
 }
 
 .card-title {
@@ -153,7 +162,8 @@ color: #84C318;
 #map {
     height: 500px;
     width: 600px;
-    margin: 10px auto;
+    margin: 75px auto;
+    border: 3px solid purple;
 }
 
 .resultsDiv {

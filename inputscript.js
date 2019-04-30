@@ -23,9 +23,9 @@ $(document).ready(function () {
     $("#activity-div").hide();
     $("#save").hide();
     $("#date-knight-picks").hide();
-    $(".results-wrapper").hide();
-    
-   
+    $("#results-wrapper").hide();
+
+
     // console.log("what!!")
 })
 
@@ -39,6 +39,7 @@ $(document).on("click", "#save", function () {
 //created function to render results
 function renderResults(resultType, totalResults, data) {
     $("#date-knight-picks").show();
+
     if (totalResults > 0) {
         // Display a header on the page with the number of results
         $('#announce-results').append("Here are the results!");
@@ -61,31 +62,55 @@ function renderResults(resultType, totalResults, data) {
             // console.log("Leon's coordinates test", coordinates);
             locations.push(coordinates);
 
+
+
+
+
+        // THIS IS THE CORRECT CODE FOR THE CARDS
+            // var restaurantResultHtml = `
+            //             <div class="card">
+            //             <img src="${image}" class="card-img-top" alt="${name}">
+            //             <div class="card-body">
+            //               <h5 class="card-title">${name}</h5>
+            //               <p class="card-text">${address} ${city} ${state} ${zipcode} ${phone} ${rating}</p>
+            //               <a href="${yelpsite}" class="btn btn-primary " target="_blank">View on Yelp</a>
+            //               <button class="btn btn-primary likeRestaurantButton" id="save-selection" data-name="${name} ">I Like This Restaurant</button>
+            //               </div>
+            //           </div>
+            //         `;
+            // var activityResultHtml = `
+            //         <div class="card">
+            //             <img src="${image}" class="card-img-top" alt="${name}">
+            //             <div class="card-body">
+            //               <h5 class="card-title">${name}</h5>
+            //               <p class="card-text">${address} ${city} ${state} ${zipcode} ${phone} ${rating}</p>
+            //               <a href="${yelpsite}" class="btn btn-primary " target="_blank">View on Yelp</a>
+            //               <button class="btn btn-primary likeActivitiesButton" id="save-selection" data-name="${name} ">I Like This Activity</button>
+            //               </div>
+            //           </div>
+            //           `;
+
+        // THIS IS JUST FOR TESTING!
             var restaurantResultHtml = `
-                        <div class="card">
-                        <img src="${image}" class="card-img-top" alt="${name}">
-                        <div class="card-body">
-                          <h5 class="card-title">${name}</h5>
-                          <p class="card-text">${address} ${city} ${state} ${zipcode} ${phone} ${rating}</p>
-                          <a href="${yelpsite}" class="btn btn-primary " target="_blank">View on Yelp</a>
-                          <button class="btn btn-primary likeRestaurantButton" id="save-selection" data-name="${name} ">I Like This Restaurant</button>
-                          </div>
-                      </div>
-                    `;
+            <div class="card">
+            <img src="${image}" class="card-img-top" alt="${name}">
+          </div>
+        `;
             var activityResultHtml = `
-                    <div class="card">
-                        <img src="${image}" class="card-img-top" alt="${name}">
-                        <div class="card-body">
-                          <h5 class="card-title">${name}</h5>
-                          <p class="card-text">${address} ${city} ${state} ${zipcode} ${phone} ${rating}</p>
-                          <a href="${yelpsite}" class="btn btn-primary " target="_blank">View on Yelp</a>
-                          <button class="btn btn-primary likeActivitiesButton" id="save-selection" data-name="${name} ">I Like This Activity</button>
-                          </div>
-                      </div>
-                      `;
+        <div class="card">
+        <img src="${image}" class="card-img-top" alt="${name}">
+      </div>
+      `;
+
+      // Ambreen testing Modal
+      $(document).on("click", ".card-img-top" , function(){
+console.log("AMBREEEEEEEEN!!!!!");
+$("#modal").show();
+      });
+
 
             // Append our result into our page
-            
+
             //will append restaurant-type button to restaurant results, and activity-type button to activity results
             if (resultType == "restaurant") {
                 $('#results').append(restaurantResultHtml);
@@ -109,9 +134,10 @@ function fetchResults(input) {
     $("#map").show();
 
     // display the results wrapper div
-    
+    $("#results-wrapper").show();
 
-    
+
+
     console.log("button clicked")
     zipcode = $("#inputZip").val();
     console.log(zipcode)
@@ -127,7 +153,7 @@ function fetchResults(input) {
     }
 
     var myurl = "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=by-" + input + "&location=" + zipcode + "&limit=3";
-  
+
     console.log(input);
     $.ajax({
         url: myurl,
@@ -145,8 +171,10 @@ function fetchResults(input) {
             //this is what calls the rendering of the results on the html:
             renderResults(resultType, totalResults, data);
 
-// this scrolls to the results div once the results are displayed
-$("#results").get(0).scrollIntoView();
+            // this scrolls to the results div once the results are displayed
+            var scroll = document.getElementById("announce-results");
+            scroll.scrollIntoView({ behavior: "smooth" });
+            
             //TODO: Put things that will happen in the AJAX event, but outside of the Loop below here
             // ------------------------------------------------------------------------------------------
             //DONE: Display the map
@@ -265,7 +293,7 @@ function resetResults() {
 var dataVar = ""
 // create a function that gets the value on click
 $("#results").empty();
-$("#submit").on("click", fetchResults );
+$("#submit").on("click", fetchResults);
 
 
 
