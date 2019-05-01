@@ -184,4 +184,8 @@ h3 {
       line-height: 1.25;
       text-align: center;
   
+
+  .markerImage {
+      height: 100px;
+      width: auto;
   }

@@ -13,6 +13,7 @@ var database = firebase.database();
 
 
 var locations = []
+var markerContent = []
 var userOne = []
 var userTwo = []
 var uniqueNames = [];
@@ -27,7 +28,6 @@ $(document).ready(function () {
 
 
     // console.log("what!!")
-})
 
 // This is for the "Click Here to select a Date Activity" button
 $(document).on("click", "#save", function () {
@@ -168,7 +168,6 @@ function fetchResults(input) {
             displayMap();
 
             $(".likeRestaurantButton").on("click", function () {
-                // We will push thisClicked to firebase
                 thisClicked = $(this).data("name")
                 var restaurantNameObject = {
                     Name: thisClicked
@@ -178,20 +177,16 @@ function fetchResults(input) {
 
             });
 
-            //DONE: Success! Items pushed properly to the database. 
             database.ref("/restaurants").on("child_added", function (child) {
                 let childAdded = child.node_.children_.root_.value.value_
                 userOne.push(childAdded);
                 //userOne is variable that holds the pushed array
-                //This array will prevent duplicate items in the array from being duplicated    
-
+                //The below array will prevent duplicate items in the array from being duplicated    
                 $.each(userOne, function (i, el) {
                     if ($.inArray(el, uniqueNames) === -1) uniqueNames.push(el);
                 });
-
-                console.log(uniqueNames);
+                // console.log(uniqueNames);
             })
-
 
 
             $(".likeActivitiesButton").on("click", function () {
@@ -200,7 +195,7 @@ function fetchResults(input) {
                 var activitiesNameObject = {
                     Name: thisClicked
                 };
-                //DONE push the selected items into an array
+                //This pushes the selected Activities into Firebase folder for /activities. 
                 database.ref("/activities").push(activitiesNameObject);
 
             });
@@ -229,8 +224,6 @@ function fetchResults(input) {
                 uniqueNames = [];
                 uniqueActivities = [];
                 // console.log("the current array is this after clearArray", uniqueNames)
-                //Clear the array
-                //TODO: BUG!! THe array doesn't clear immediately, but the firebase does. However a refresh will clear the array. 
             })
 
             database.ref().on("child_removed", function () {
@@ -238,7 +231,7 @@ function fetchResults(input) {
                 userTwo = [];
                 uniqueNames = [];
                 uniqueActivities = [];
-                // console.log("uniqueNames should be a fresh array", uniqueNames);
+                console.log("uniqueNames and uniqueActivites arrays and Firebase are both cleared", uniqueNames, uniqueActivities);
 
 
             })
@@ -252,8 +245,6 @@ function fetchResults(input) {
                 $("#dkActivityPick").text("The thing you two should do after is: " + dkPickActivity)
 
             })
-
-
 
             // ------------------------------------------------------------------------------------------
         }
@@ -284,9 +275,15 @@ $("#submit").on("click", fetchResults);
 
 
 
+$("#submit").on("click", displayResultDiv);
 
 
+// create a function that shifts focus on the results div
+function displayResultDiv() {
+    var resultDiv = document.getElementById("results");
+    resultDiv.scrollIntoView();
 
+}
 
 function displayMap() {
     console.log("Leon's Locations var:", locations);
@@ -303,6 +300,9 @@ function displayMap() {
     var infowindow = new google.maps.InfoWindow();
 
     for (i = 0; i < locations.length; i++) {
+
+        //Variables to hold the Names, URL, map, phone number, yelp stars
+
         marker = new google.maps.Marker({
             position: new google.maps.LatLng(locations[i].latitude, locations[i].longitude),
             map: map
@@ -310,18 +310,41 @@ function displayMap() {
 
         google.maps.event.addListener(marker, 'click', (function (marker, i) {
             return function () {
-                infowindow.setContent(locations[i][0]);
+                var markerName = dataVar.businesses[i].name
+                var markerAddress = dataVar.businesses[i].location.display_address
+                var markerPhone = dataVar.businesses[i].display_phone
+                var markerRating = dataVar.businesses[i].rating
+                var markerCount = dataVar.businesses[i].review_count
+                var markerPhoto = dataVar.businesses[i].image_url
+                markerContent = 
+                `<img src ="${markerPhoto}" class = "markerImage">, 
+                <p>
+                    <h5>${markerName}</h5><br>
+                    <strong>Address: </strong>${markerAddress} <br> 
+                    <strong>Phone No: </strong>${markerPhone}<br>
+                    <strong>Rating: </strong>${markerRating}<br>
+                    <strong># of Reviews: </strong>${markerCount}</p>`
+
                 infowindow.open(map, marker);
+                infowindow.setContent(markerContent);
             }
         })(marker, i));
     }
 };
 
-// $(".likeButton").on("click", function(){
-//     thisClicked = $("this")
-// console.log(thisClicked);
-// });
 
+//DELETE THIS AFTER--------------
+// `
+//                         <div class="card">
+//                         <img src="${image}" class="card-img-top" alt="${name}">
+//                         <div class="card-body">
+//                           <h5 class="card-title">${name}</h5>
+//                           <p class="card-text">${address} ${city} ${state} ${zipcode} ${phone} ${rating}</p>
+//                           <a href="${yelpsite}" class="btn btn-primary " target="_blank">View on Yelp</a>
+//                           <button class="btn btn-primary likeRestaurantButton" id="save-selection" data-name="${name} ">I Like This Restaurant</button>
+//                           </div>
+//                       </div>
+//              `
 
 
 //Animated Knight 
