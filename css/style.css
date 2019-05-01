@@ -179,6 +179,19 @@ color: #84C318;
 
 /* cursor*/
 
-.module {
+/* .module {
     cursor: url('../images/Cursor.png'), auto;	
+  } */
+
+  .ml2, .ml3 {
+    font-weight: 900;
+    font-size: 3.5em;
+    color: white;
+
+    
+  }
+  
+  .ml2 .letter, .ml3 .letter {
+    display: inline-block;
+    line-height: 1em;
   }
