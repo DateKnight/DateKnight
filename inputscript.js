@@ -10,20 +10,53 @@ var config = {
 firebase.initializeApp(config);
 var database = firebase.database();
 
+//FIREBASE ANON LOGIN STUFF -----------------------------
+var auth = firebase.auth();
 
+
+firebase.auth().signInAnonymously().catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    // ...
+  });
+
+
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      // User is signed in.
+      var isAnonymous = user.isAnonymous;
+      uid = user.uid;
+      // ...
+    } else {
+      // User is signed out.
+      // ...
+    }
+    // ...
+    console.log("This is the anon ID in scope", uid);
+
+  });
+//FIREBASE ANON LOGIN STUFF -----------------------------
+
+//Global variables. These empty arrays will have information pushed into them from the initial ajax calls. 
+var uid = ""
 var locations = []
-    var newMarkerName = []
-    var newMarkerImage = []
-    var newMarkerAddress = []
-    var newMarkerPhone = []
-    var newMarkerRating = []
-    var newMarkerReviews = []
-
+var newMarkerName = []
+var newMarkerImage = []
+var newMarkerAddress = []
+var newMarkerPhone = []
+var newMarkerRating = []
+var newMarkerReviews = []
 var markerContent = []
+
+//FIREBASE ARRAYS-------------------------------------- 
+    //These variables hold the data pushed from the event listeners attached to firebase.
 var userOne = []
 var userTwo = []
 var uniqueNames = [];
 var uniqueActivities = [];
+//FIREBASE ARRAYS-------------------------------------- 
+
 
 // Ambreen - working on hide(); element to separate the Activity and Cuisine search
 $(document).ready(function () {
@@ -59,12 +92,12 @@ function renderResults(resultType, totalResults, data) {
             var address = item.location.address1;
             var city = item.location.city;
             var state = item.location.state;
-                var lAddress = item.location.display_address;
+            var lAddress = item.location.display_address;
             var zipcode = item.location.zip_code;
             var coordinates = item.coordinates;
             var yelpsite = item.url;
 
-                //PUSHING THE BELOW TO GLOBAL VARIABLES FOR MARKER MANIPULATION LATER
+            //PUSHING THE BELOW TO GLOBAL VARIABLES FOR MARKER MANIPULATION LATER
             locations.push(coordinates);
             newMarkerName.push(name);
             newMarkerImage.push(image);
@@ -73,7 +106,7 @@ function renderResults(resultType, totalResults, data) {
             newMarkerRating.push(rating)
             newMarkerReviews.push(reviewCount)
 
-  
+
 
 
 
@@ -167,20 +200,25 @@ function fetchResults(input) {
                 var restaurantNameObject = {
                     Name: thisClicked
                 };
-                //DONE push the selected items into an array
-                database.ref("/restaurants").push(restaurantNameObject);
+
+                    var rootRef = database.ref("users");
+                    var restaurantsRef = rootRef.child(uid);
+                    restaurantsRef.child("/restaurants").push(restaurantNameObject)
 
             });
 
-            database.ref("/restaurants").on("child_added", function (child) {
-                let childAdded = child.node_.children_.root_.value.value_
+            database.ref('users/'+ uid +'/restaurants').on("child_added", function (child) {
+                console.log("PLEASE I BEG YOU TO WORK");
+                console.log(child);
+                var childAdded = child.node_.children_.root_.value.value_
+                
                 userOne.push(childAdded);
-                //userOne is variable that holds the pushed array
-                //The below array will prevent duplicate items in the array from being duplicated    
                 $.each(userOne, function (i, el) {
                     if ($.inArray(el, uniqueNames) === -1) uniqueNames.push(el);
                 });
-                // console.log(uniqueNames);
+
+                console.log("new userOne", userOne);
+                console.log("new uniqueNames", uniqueNames);
             })
 
 
@@ -191,13 +229,16 @@ function fetchResults(input) {
                     Name: thisClicked
                 };
                 //This pushes the selected Activities into Firebase folder for /activities. 
-                database.ref("/activities").push(activitiesNameObject);
+                var rootRef = database.ref("users");
+                var activitiesRef = rootRef.child(uid);
+                activitiesRef.child("/activities").push(activitiesNameObject)
 
             });
 
             //DONE: Success! Items pushed properly to the database. 
-            database.ref("/activities").on("child_added", function (child) {
-                let childAddedActivities = child.node_.children_.root_.value.value_
+
+            database.ref('users/'+ uid +'/activities').on("child_added", function (child) {
+                var childAddedActivities = child.node_.children_.root_.value.value_
                 userTwo.push(childAddedActivities);
                 //userOne is variable that holds the pushed array
                 //This array will prevent duplicate items in the array from being duplicated    
@@ -206,7 +247,8 @@ function fetchResults(input) {
                     if ($.inArray(elel, uniqueActivities) === -1) uniqueActivities.push(elel);
                 });
 
-                console.log(uniqueActivities);
+                console.log("new userTwo activities", userTwo);
+                console.log("new userTwo unique array", uniqueActivities);
             })
 
 
@@ -277,9 +319,12 @@ function displayResultDiv() {
 
 }
 
-function displayMap() {
-    console.log("Leon's Locations var:", locations);
 
+// --------------------------------------GOOGLE MAPS API SECTION------------------------------------------
+    //This displays the map and sets the center of the map on the first business that Yelp pulls up. 
+function displayMap() {
+    // console.log("Leon's Locations var:", locations);
+    //Below displays the map and sets it to zoom 13
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 13,
         //DONE: The center of the maps is grabbied via the first business's latitude and longitutde coordinates. 
@@ -287,27 +332,18 @@ function displayMap() {
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 
-    //TODO: based on the length of the search results, push the longitude and latitude into the markers
-
+    //infoWindow creates the content for each marker. 
     var infowindow = new google.maps.InfoWindow();
-
+    //For loop to grab the locations from the locations array which was pushed during the ajax call. Variables were set global. 
     for (i = 0; i < locations.length; i++) {
-        
-        //Variables to hold the Names, URL, map, phone number, yelp stars
-
         marker = new google.maps.Marker({
             position: new google.maps.LatLng(locations[i].latitude, locations[i].longitude),
             map: map
         });
-
-
-
-
-        google.maps.event.addListener(marker, 'click', (function (marker, i) {
+    //Event listener for each marker. All the content from the markers were pushed into an array during the initial ajax calls. Variables were set global. 
+        google.maps.event.addListener(marker, 'mouseover', (function (marker, i) {
             return function () {
-
-                
-                markerContent =            
+                markerContent =
                     `
                 <div id = "markerContent"> <img src ="${newMarkerImage[i]}" class = "markerImage">, 
                 <p>
@@ -318,14 +354,13 @@ function displayMap() {
                     <strong># of Reviews: </strong>${newMarkerReviews[i]}</p>
                 </div>
                     `
-
                 infowindow.open(map, marker);
                 infowindow.setContent(markerContent);
-                
             }
         })(marker, i));
     }
 }
+// --------------------------------------End GOOGLE MAPS API SECTION------------------------------------------
 
 
 //Animated Knight 
