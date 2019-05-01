@@ -25,10 +25,6 @@
 </head>
 
 <body>
-
-
-
-
     <div class="container">
         <header>
              <nav class="navbar">
@@ -64,13 +60,12 @@
 
 
         <div class="input-container">
-            <p>
+            <h3>
                 Let the Date Knight plan your date!
-            </p>
+            </h3>
             <div class="inputs">
                 <div class="form-group">
-                    <label for="inputZip" class="zipcode-label">Zip Code:</label>
-                    <input type="text" class="form-control" id="inputZip">
+                    <input type="text" class="form-control" id="inputZip" placeholder="Zip Code">
                 </div>
                 <div class="input-group mb-3" id="activity-div">
                     <div class="input-group-prepend">
@@ -102,11 +97,12 @@
                 <a class="btn btn-primary btn-sm" type="reset" id="reset">Reset</a>
                 <a class="btn btn-primary btn-sm" type="save" id="save">Click here to select a Date Activity</a>
             </div>
-            <div class="results-wrapper">
-                <div id="map"></div>
+            <div class="container" id="results-wrapper">
                 <div class="announce-results" id="announce-results"></div>
-                <div class="results" id="results"></div>
-                <!-- <div id="map"></div> -->
+                <div class="row">
+                    <div class="results col-4" id="results"></div>
+                    <div id="map" class="col-6"></div>
+                </div>
             </div>
             <div class="date-knight-picks" id="date-knight-picks">
                 <button id="pickDate" class="pickDate">DATE PICKER</button>
@@ -123,7 +119,17 @@
         </div>
         <div id="modal-content"></div>
 
+        <!-- Modal HTML -->
+        <!-- <div id="ex1" class="modal">
+            <p>Thanks for clicking. That felt good.</p>
+            <a href="#" rel="modal:close">Close</a>
+        </div> -->
+
+        <!-- Link to open the modal -->
+        <!-- <p><a href="#ex1" rel="modal:open">Open Modal</a></p> -->
+
     </div>
+
 
     <script src="inputscript.js"></script>
 </body>
