@@ -11,8 +11,14 @@ firebase.initializeApp(config);
 var database = firebase.database();
 
 
-
 var locations = []
+    var newMarkerName = []
+    var newMarkerImage = []
+    var newMarkerAddress = []
+    var newMarkerPhone = []
+    var newMarkerRating = []
+    var newMarkerReviews = []
+
 var markerContent = []
 var userOne = []
 var userTwo = []
@@ -49,15 +55,28 @@ function renderResults(resultType, totalResults, data) {
             var image = item.image_url;
             var name = item.name;
             var rating = item.rating;
-            // var reviewcount = item.review_count;
+            var reviewCount = item.review_count;
             var address = item.location.address1;
             var city = item.location.city;
             var state = item.location.state;
+                var lAddress = item.location.display_address;
             var zipcode = item.location.zip_code;
             var coordinates = item.coordinates;
             var yelpsite = item.url;
-            // console.log("Leon's coordinates test", coordinates);
+
+                //PUSHING THE BELOW TO GLOBAL VARIABLES FOR MARKER MANIPULATION LATER
             locations.push(coordinates);
+            newMarkerName.push(name);
+            newMarkerImage.push(image);
+            newMarkerAddress.push(lAddress);
+            newMarkerPhone.push(phone)
+            newMarkerRating.push(rating)
+            newMarkerReviews.push(reviewCount)
+
+  
+
+
+
 
             var restaurantResultHtml = `
                         <div class="card">
@@ -273,7 +292,7 @@ function displayMap() {
     var infowindow = new google.maps.InfoWindow();
 
     for (i = 0; i < locations.length; i++) {
-
+        
         //Variables to hold the Names, URL, map, phone number, yelp stars
 
         marker = new google.maps.Marker({
@@ -281,43 +300,32 @@ function displayMap() {
             map: map
         });
 
+
+
+
         google.maps.event.addListener(marker, 'click', (function (marker, i) {
             return function () {
-                var markerName = dataVar.businesses[i].name
-                var markerAddress = dataVar.businesses[i].location.display_address
-                var markerPhone = dataVar.businesses[i].display_phone
-                var markerRating = dataVar.businesses[i].rating
-                var markerCount = dataVar.businesses[i].review_count
-                var markerPhoto = dataVar.businesses[i].image_url
-                markerContent = 
-                `<img src ="${markerPhoto}" class = "markerImage">, 
+
+                
+                markerContent =            
+                    `
+                <div id = "markerContent"> <img src ="${newMarkerImage[i]}" class = "markerImage">, 
                 <p>
-                    <h5>${markerName}</h5><br>
-                    <strong>Address: </strong>${markerAddress} <br> 
-                    <strong>Phone No: </strong>${markerPhone}<br>
-                    <strong>Rating: </strong>${markerRating}<br>
-                    <strong># of Reviews: </strong>${markerCount}</p>`
+                    <h5>${newMarkerName[i]}</h5><br>
+                    <strong>Address: </strong>${newMarkerAddress[i]} <br> 
+                    <strong>Phone No: </strong>${newMarkerPhone[i]}<br>
+                    <strong>Rating: </strong>${newMarkerRating[i]}<br>
+                    <strong># of Reviews: </strong>${newMarkerReviews[i]}</p>
+                </div>
+                    `
 
                 infowindow.open(map, marker);
                 infowindow.setContent(markerContent);
+                
             }
         })(marker, i));
     }
-};
-
-
-//DELETE THIS AFTER--------------
-// `
-//                         <div class="card">
-//                         <img src="${image}" class="card-img-top" alt="${name}">
-//                         <div class="card-body">
-//                           <h5 class="card-title">${name}</h5>
-//                           <p class="card-text">${address} ${city} ${state} ${zipcode} ${phone} ${rating}</p>
-//                           <a href="${yelpsite}" class="btn btn-primary " target="_blank">View on Yelp</a>
-//                           <button class="btn btn-primary likeRestaurantButton" id="save-selection" data-name="${name} ">I Like This Restaurant</button>
-//                           </div>
-//                       </div>
-//              `
+}
 
 
 //Animated Knight 
