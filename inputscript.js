@@ -10,14 +10,47 @@ var config = {
 firebase.initializeApp(config);
 var database = firebase.database();
 
+//FIREBASE ANON LOGIN STUFF -----------------------------
+var auth = firebase.auth();
+firebase.auth().signInAnonymously().catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    // ...
+  });
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      // User is signed in.
+      var isAnonymous = user.isAnonymous;
+      uid = user.uid;
+      // ...
+    } else {
+      // User is signed out.
+      // ...
+    }
+    // ...
+    console.log("This is the anon ID in scope", uid);
+  });
+//FIREBASE ANON LOGIN STUFF -----------------------------
 
-
+//Global variables. These empty arrays will have information pushed into them from the initial ajax calls. 
+var uid = ""
 var locations = []
+var newMarkerName = []
+var newMarkerImage = []
+var newMarkerAddress = []
+var newMarkerPhone = []
+var newMarkerRating = []
+var newMarkerReviews = []
 var markerContent = []
+
+//FIREBASE ARRAYS-------------------------------------- 
+    //These variables hold the data pushed from the event listeners attached to firebase.
 var userOne = []
 var userTwo = []
 var uniqueNames = [];
 var uniqueActivities = [];
+//FIREBASE ARRAYS-------------------------------------- 
 
 // Ambreen - working on hide(); element to separate the Activity and Cuisine search
 $(document).ready(function () {
@@ -52,15 +85,24 @@ $(document).ready(function () {
                 var image = item.image_url;
                 var name = item.name;
                 var rating = item.rating;
-                // var reviewcount = item.review_count;
+                var reviewcount = item.review_count;
                 var address = item.location.address1;
                 var city = item.location.city;
                 var state = item.location.state;
+                var lAddress = item.location.display_address;
                 var zipcode = item.location.zip_code;
                 var coordinates = item.coordinates;
                 var yelpsite = item.url;
-                // console.log("Leon's coordinates test", coordinates);
-                locations.push(coordinates);
+
+             //PUSHING THE BELOW TO GLOBAL VARIABLES FOR MARKER MANIPULATION LATER
+            locations.push(coordinates);
+            newMarkerName.push(name);
+            newMarkerImage.push(image);
+            newMarkerAddress.push(lAddress);
+            newMarkerPhone.push(phone)
+            newMarkerRating.push(rating)
+            newMarkerReviews.push(reviewcount)
+            //--------------------------------------------------
 
                 var restaurantResultHtml = `
                 <div class="card">
@@ -173,45 +215,53 @@ $(document).ready(function () {
                         Name: thisClicked
                     };
                     //DONE push the selected items into an array
-                    database.ref("/restaurants").push(restaurantNameObject);
+                    var rootRef = database.ref("users");
+                    var restaurantsRef = rootRef.child(uid);
+                    restaurantsRef.child("/restaurants").push(restaurantNameObject)
 
                 });
 
-                database.ref("/restaurants").on("child_added", function (child) {
-                    let childAdded = child.node_.children_.root_.value.value_
+                database.ref('users/'+ uid +'/restaurants').on("child_added", function (child) {
+                    console.log("PLEASE I BEG YOU TO WORK");
+                    console.log(child);
+                    var childAdded = child.node_.children_.root_.value.value_
+                    
                     userOne.push(childAdded);
-                    //userOne is variable that holds the pushed array
-                    //The below array will prevent duplicate items in the array from being duplicated    
                     $.each(userOne, function (i, el) {
                         if ($.inArray(el, uniqueNames) === -1) uniqueNames.push(el);
                     });
-                    // console.log(uniqueNames);
+    
+                    console.log("new userOne", userOne);
+                    console.log("new uniqueNames", uniqueNames);
                 })
 
 
-                $(".likeActivitiesButton").on("click", function () {
-                    // We will push thisClicked to firebase
-                    thisClicked = $(this).data("name")
-                    var activitiesNameObject = {
-                        Name: thisClicked
-                    };
-                    //This pushes the selected Activities into Firebase folder for /activities. 
-                    database.ref("/activities").push(activitiesNameObject);
+            $(".likeActivitiesButton").on("click", function () {
+                // We will push thisClicked to firebase
+                thisClicked = $(this).data("name")
+                var activitiesNameObject = {
+                    Name: thisClicked
+                };
+                //This pushes the selected Activities into Firebase folder for /activities. 
+                var rootRef = database.ref("users");
+                var activitiesRef = rootRef.child(uid);
+                activitiesRef.child("/activities").push(activitiesNameObject)
 
-                });
+            });
 
                 //DONE: Success! Items pushed properly to the database. 
-                database.ref("/activities").on("child_added", function (child) {
-                    let childAddedActivities = child.node_.children_.root_.value.value_
+                database.ref('users/'+ uid +'/activities').on("child_added", function (child) {
+                    var childAddedActivities = child.node_.children_.root_.value.value_
                     userTwo.push(childAddedActivities);
                     //userOne is variable that holds the pushed array
                     //This array will prevent duplicate items in the array from being duplicated    
-
+    
                     $.each(userTwo, function (i, elel) {
                         if ($.inArray(elel, uniqueActivities) === -1) uniqueActivities.push(elel);
                     });
-
-                    console.log(uniqueActivities);
+    
+                    console.log("new userTwo activities", userTwo);
+                    console.log("new userTwo unique array", uniqueActivities);
                 })
 
 
@@ -308,40 +358,70 @@ $(document).ready(function () {
                 map: map
             });
 
-            google.maps.event.addListener(marker, 'click', (function (marker, i) {
+            google.maps.event.addListener(marker, 'mouseover', (function (marker, i) {
                 return function () {
-                    var markerName = dataVar.businesses[i].name
-                    var markerAddress = dataVar.businesses[i].location.display_address
-                    var markerPhone = dataVar.businesses[i].display_phone
-                    var markerRating = dataVar.businesses[i].rating
-                    var markerCount = dataVar.businesses[i].review_count
-                    var markerPhoto = dataVar.businesses[i].image_url
                     markerContent =
-                        `<img src ="${markerPhoto}" class = "markerImage">, 
+                    `
+                <div id = "markerContent"> <img src ="${newMarkerImage[i]}" class = "markerImage">, 
                 <p>
-                    <h5>${markerName}</h5><br>
-                    <strong>Address: </strong>${markerAddress} <br> 
-                    <strong>Phone No: </strong>${markerPhone}<br>
-                    <strong>Rating: </strong>${markerRating}<br>
-                    <strong># of Reviews: </strong>${markerCount}</p>`
-
-                    infowindow.open(map, marker);
-                    infowindow.setContent(markerContent);
-                }
-            })(marker, i));
+                    <h5>${newMarkerName[i]}</h5><br>
+                    <strong>Address: </strong>${newMarkerAddress[i]} <br> 
+                    <strong>Phone No: </strong>${newMarkerPhone[i]}<br>
+                    <strong>Rating: </strong>${newMarkerRating[i]}<br>
+                    <strong># of Reviews: </strong>${newMarkerReviews[i]}</p>
+                </div>
+                    `
+                infowindow.open(map, marker);
+                infowindow.setContent(markerContent);
+            }
+        })(marker, i));
         }
     };
+//Animated text
 
+$('.ml2').each(function(){
+    $(this).html($(this).text().replace(/([^\x00-\x80]|\w)/g, "<span class='letter'>$&</span>"));
+  });
+  
+  anime.timeline({loop: false})
+    .add({
+      targets: '.ml2 .letter',
+      scale: [4,1],
+      opacity: [0,1],
+      translateZ: 0,
+      easing: "easeOutExpo",
+      duration: 250,
+      delay: function(el, i) {
+        return 70*i;
+     }
+    }).add({
+      targets: '.ml2',
+      opacity: 1,
+      duration: 1000,
+    //   easing: "easeOutExpo",
+      delay: 1000
+    });
 
-    //DELETE THIS AFTER--------------
-    // `
-    //                         <div class="card">
-    //                         <img src="${image}" class="card-img-top" alt="${name}">
-    //                         <div class="card-body">
-    //                           <h5 class="card-title">${name}</h5>
-    //                           <p class="card-text">${address} ${city} ${state} ${zipcode} ${phone} ${rating}</p>
-    //                           <a href="${yelpsite}" class="btn btn-primary " target="_blank">View on Yelp</a>
-    //                           <button class="btn btn-primary likeRestaurantButton" id="save-selection" data-name="${name} ">I Like This Restaurant</button>
-    //                           </div>
-    //                       </div>
-    //              `
+    $('.ml3').each(function(){
+        $(this).html($(this).text().replace(/([^\x00-\x80]|\w)/g, "<span class='letter'>$&</span>"));
+      });
+      
+      anime.timeline({loop: false})
+        .add({
+          targets: '.ml3 .letter',
+          scale: [4,1],
+          opacity: [0,1],
+          translateZ: 0,
+          easing: "easeOutExpo",
+          duration: 1500,
+          delay: function(el, i) {
+            return 70*i;
+         }
+        }).add({
+          targets: '.ml3',
+          opacity: 1,
+          duration: 1000,
+        //   easing: "easeOutExpo",
+          delay: 1000
+        });
+});
