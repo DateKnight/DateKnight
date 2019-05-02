@@ -61,10 +61,10 @@ $(document).ready(function () {
 
     // This is for the "Click Here to select a Date Activity" button
     $(document).on("click", "#pick-activity-btn", function () {
+
         $("#cuisine-div").hide();
         $("#activity-div").show();
         resetResults();
-
     });
     //created function to render results
     function renderResults(resultType, totalResults, data) {
@@ -279,7 +279,7 @@ $(document).ready(function () {
                 //TODO: Clear the uniqueNames array to [];
                 $("#resetArray").on("click", function () {
                     //The below line will clear the database!
-                    database.ref().remove();
+                    database.ref('users/'+ uid).remove();
                     userOne = [];
                     userTwo = [];
                     uniqueNames = [];

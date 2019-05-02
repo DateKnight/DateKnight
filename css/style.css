@@ -89,7 +89,10 @@ h3 {
     font-size: 40px;
     font-family: 'Uncial Antiqua', cursive;
     color: #84C318;
+    text-align: center;
 }
+
+
 
 .form-group {
     margin: 10px auto;
@@ -131,6 +134,7 @@ h3 {
 }
 
 .next {
+    text-align: center;
     color: #84C318;
     font-family: 'Uncial Antiqua', cursive;
 }
@@ -144,6 +148,18 @@ h3 {
 
 .btn:hover {
     background-color: #84C318;
+    color: purple;
+}
+
+#pick-activity-btn {
+    font-size: 20px;
+    height: 75px;
+    width: 200px;
+}
+
+#pick-activity-btn:hover {
+    background-color: #84C318;
+    color: purple;
 }
 
 
