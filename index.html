@@ -60,7 +60,7 @@
             </h3>
             <div class="inputs">
                 <div class="form-group">
-                    <input type="number" class="form-control" id="inputZip" placeholder="Zip Code" max="5" min="0">
+                    <input type="text" class="form-control" id="inputZip" placeholder="Zip Code" max="5" min="0">
                 </div>
                 <div class="input-group mb-3" id="activity-div">
                     <div class="input-group-prepend">
@@ -83,9 +83,11 @@
                     </select>
                 </div>
                 <div class="input-group mb-3" id="cuisine-div">
+                    
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="restaurant-input">Cuisine</label>
                     </div>
+                    
                     <select class="custom-select" id="cuisine-input">
                         <option selected id="null-text" class="menu">Choose...</option>
                         <option value="Thai">Thai</option>
@@ -99,7 +101,10 @@
                         <option value="Pakistani">Pakistani</option>
 
                     </select>
+                    
                 </div>
+              
+                <div id="message-div"></div>
                 <a class="btn btn-primary btn-sm" type="submit" id="submit">Submit</a>
                 <a class="btn btn-primary btn-sm" type="reset" id="reset">Reset</a>
             </div>

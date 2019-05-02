@@ -161,7 +161,7 @@ $(document).ready(function () {
         }
     });
 
-    // Setting up required fields
+   
 
 
     function fetchResults(input) {
@@ -175,11 +175,12 @@ $(document).ready(function () {
         // display the results wrapper div
         $("#results-wrapper").show();
 
-
+// remove the "enter zip code" message div
+// $("#message-div").hide();
 
         console.log("button clicked")
         zipcode = $("#inputZip").val();
-        console.log(zipcode)
+        // console.log(zipcode)
         activity = $("#activity-input").val();
         cuisine = $("#cuisine-input").val();
 
@@ -332,11 +333,16 @@ $(document).ready(function () {
     var dataVar = ""
     // create a function that gets the value on click
     $("#results").empty();
-    $("#submit").on("click", fetchResults);
+    $("#submit").on("click", fetchResults );
 
 
 
     $("#submit").on("click", displayResultDiv);
+
+     
+        
+
+            
 
 
     // create a function that shifts focus on the results div
@@ -344,6 +350,15 @@ $(document).ready(function () {
         var resultDiv = document.getElementById("results");
         resultDiv.scrollIntoView();
 
+      
+// Display text when fields are blank and User click on Submit
+
+     
+if (document.getElementById("inputZip").value.length == 0) {
+    console.log("AMBREEEEEEEEN!!!!!!!!!")
+    $("#results-wrapper").hide();
+$("#message-div").text("Please Enter a Zip Code and select a cuisine to continue");
+}
     }
 
     function displayMap() {
