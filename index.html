@@ -20,32 +20,33 @@
     <!-- Ambreen added these to create a modal -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
 </head>
 
 <body>
-
-
-
-
     <div class="container">
         <header>
             <nav class="navbar">
                 <a class="navbar-brand" href="#">
                     <img src="images/tempknight.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
-                    DateKnight
+                    <!-- <h1 class="ml2">DateKnight</h1> -->
+
+
                 </a>
             </nav>
         </header>
         <div class="speechbubble-container">
             <div class="speech-bubble1">
-                <h1>
+                <h1 class="ml2">
                     "What do you want to do tonight?..."
+
                 </h1>
             </div>
             <div class="speech-bubble2">
-                <h2>
+                <h1 class="ml3">
                     "...I dunno, what do you wanna do?"
-                </h2>
+                </h1>
 
             </div>
 
@@ -59,13 +60,12 @@
 
 
         <div class="input-container">
-            <p>
+            <h3>
                 Let the Date Knight plan your date!
-            </p>
+            </h3>
             <div class="inputs">
                 <div class="form-group">
-                    <label for="inputZip" class="zipcode-label">Zip Code:</label>
-                    <input type="text" class="form-control" id="inputZip">
+                    <input type="text" class="form-control" id="inputZip" placeholder="Zip Code">
                 </div>
                 <div class="input-group mb-3" id="activity-div">
                     <div class="input-group-prepend">
@@ -97,11 +97,12 @@
                 <a class="btn btn-primary btn-sm" type="reset" id="reset">Reset</a>
                 <a class="btn btn-primary btn-sm" type="save" id="save">Click here to select a Date Activity</a>
             </div>
-            <div class="results-wrapper">
-                <div id="map"></div>
+            <div class="container" id="results-wrapper">
                 <div class="announce-results" id="announce-results"></div>
-                <div class="results" id="results"></div>
-                <!-- <div id="map"></div> -->
+                <div class="row">
+                    <div class="results col-4" id="results"></div>
+                    <div id="map" class="col-6"></div>
+                </div>
             </div>
             <div class="date-knight-picks" id="date-knight-picks">
                 <button id="pickDate" class="pickDate">DATE PICKER</button>
@@ -119,6 +120,7 @@
         <div id="modal-content"></div>
 
     </div>
+
 
     <script src="inputscript.js"></script>
 </body>
