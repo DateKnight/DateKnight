@@ -202,8 +202,12 @@ h3 {
   
 
   .markerImage {
-      height: 100px;
+      height: 135px;
       width: auto;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+
   }
 
 #message-div {

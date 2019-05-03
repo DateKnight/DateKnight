@@ -102,10 +102,10 @@ $(document).ready(function () {
 
                 var restaurantResultHtml = `
                 <div class="card">
-                    <a href="#ex1" rel="modal:open">
+                    <a href="#ex1`+i+`" rel="modal:open">
                     <img src="${image}" class="card-img-top" alt="${name}">
                     </a>
-                    <div id="ex1" class="modal">
+                    <div id="ex1`+i+`" class="modal">
                     <h5 class="card-title">${name}</h5>
                     <p class="card-text">${address} <br> ${city} , ${state} ${zipcode} <br> ${phone} <br> Rating: ${rating}</p>
                     <a href="${yelpsite}" class="btn btn-primary " target="_blank">View on Yelp</a>
@@ -114,7 +114,7 @@ $(document).ready(function () {
                     <a href="#" rel="modal:close">Close</a>
                     </div>
                 </div>
-        `;
+                `;
                 var activityResultHtml = `
                 <div class="card">
                     <a href="#ex1" rel="modal:open">
@@ -129,7 +129,7 @@ $(document).ready(function () {
                     <a href="#" rel="modal:close">Close</a>
                     </div>
                 </div>
-      `;
+                `;
 
 
 
@@ -365,7 +365,7 @@ $("#message-div").text("Please Enter a Zip Code and select a cuisine to continue
         console.log("Leon's Locations var:", locations);
 
         var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 13,
+            zoom: 12,
             //DONE: The center of the maps is grabbied via the first business's latitude and longitutde coordinates. 
             center: new google.maps.LatLng(dataVar.businesses[0].coordinates.latitude, dataVar.businesses[0].coordinates.longitude),
             mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -384,7 +384,7 @@ $("#message-div").text("Please Enter a Zip Code and select a cuisine to continue
                 map: map
             });
 
-            google.maps.event.addListener(marker, 'mouseover', (function (marker, i) {
+            google.maps.event.addListener(marker, 'click', (function (marker, i) {
                 return function () {
                     markerContent =
                         `
