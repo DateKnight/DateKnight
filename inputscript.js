@@ -12,25 +12,25 @@ var database = firebase.database();
 
 //FIREBASE ANON LOGIN STUFF -----------------------------
 var auth = firebase.auth();
-firebase.auth().signInAnonymously().catch(function(error) {
+firebase.auth().signInAnonymously().catch(function (error) {
     // Handle Errors here.
     var errorCode = error.code;
     var errorMessage = error.message;
     // ...
-  });
-  firebase.auth().onAuthStateChanged(function(user) {
+});
+firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-      // User is signed in.
-      var isAnonymous = user.isAnonymous;
-      uid = user.uid;
-      // ...
+        // User is signed in.
+        var isAnonymous = user.isAnonymous;
+        uid = user.uid;
+        // ...
     } else {
-      // User is signed out.
-      // ...
+        // User is signed out.
+        // ...
     }
     // ...
     console.log("This is the anon ID in scope", uid);
-  });
+});
 //FIREBASE ANON LOGIN STUFF -----------------------------
 
 //Global variables. These empty arrays will have information pushed into them from the initial ajax calls. 
@@ -45,7 +45,7 @@ var newMarkerReviews = []
 var markerContent = []
 
 //FIREBASE ARRAYS-------------------------------------- 
-    //These variables hold the data pushed from the event listeners attached to firebase.
+//These variables hold the data pushed from the event listeners attached to firebase.
 var userOne = []
 var userTwo = []
 var uniqueNames = [];
@@ -55,23 +55,20 @@ var uniqueActivities = [];
 // Ambreen - working on hide(); element to separate the Activity and Cuisine search
 $(document).ready(function () {
     $("#activity-div").hide();
-    $("#save").hide();
+    $("#next-pick-an-activity").hide();
     $("#date-knight-picks").hide();
     $("#results-wrapper").hide();
 
-
-    // console.log("what!!")
-
     // This is for the "Click Here to select a Date Activity" button
-    $(document).on("click", "#save", function () {
+    $(document).on("click", "#pick-activity-btn", function () {
+
         $("#cuisine-div").hide();
         $("#activity-div").show();
-        resetResults();
 
+        resetResults();
     });
     //created function to render results
     function renderResults(resultType, totalResults, data) {
-        $("#date-knight-picks").show();
 
         if (totalResults > 0) {
             // Display a header on the page with the number of results
@@ -94,22 +91,22 @@ $(document).ready(function () {
                 var coordinates = item.coordinates;
                 var yelpsite = item.url;
 
-             //PUSHING THE BELOW TO GLOBAL VARIABLES FOR MARKER MANIPULATION LATER
-            locations.push(coordinates);
-            newMarkerName.push(name);
-            newMarkerImage.push(image);
-            newMarkerAddress.push(lAddress);
-            newMarkerPhone.push(phone)
-            newMarkerRating.push(rating)
-            newMarkerReviews.push(reviewcount)
-            //--------------------------------------------------
+                //PUSHING THE BELOW TO GLOBAL VARIABLES FOR MARKER MANIPULATION LATER
+                locations.push(coordinates);
+                newMarkerName.push(name);
+                newMarkerImage.push(image);
+                newMarkerAddress.push(lAddress);
+                newMarkerPhone.push(phone)
+                newMarkerRating.push(rating)
+                newMarkerReviews.push(reviewcount)
+                //--------------------------------------------------
 
                 var restaurantResultHtml = `
                 <div class="card">
-                    <a href="#ex1" rel="modal:open">
+                    <a href="#ex1`+i+`" rel="modal:open">
                     <img src="${image}" class="card-img-top" alt="${name}">
                     </a>
-                    <div id="ex1" class="modal">
+                    <div id="ex1`+i+`" class="modal">
                     <h5 class="card-title">${name}</h5>
                     <p class="card-text">${address} <br> ${city} , ${state} ${zipcode} <br> ${phone} <br> Rating: ${rating}</p>
                     <a href="${yelpsite}" class="btn btn-primary " target="_blank">View on Yelp</a>
@@ -118,7 +115,7 @@ $(document).ready(function () {
                     <a href="#" rel="modal:close">Close</a>
                     </div>
                 </div>
-        `;
+                `;
                 var activityResultHtml = `
                 <div class="card">
                     <a href="#ex1" rel="modal:open">
@@ -133,7 +130,7 @@ $(document).ready(function () {
                     <a href="#" rel="modal:close">Close</a>
                     </div>
                 </div>
-      `;
+                `;
 
 
 
@@ -145,6 +142,7 @@ $(document).ready(function () {
                     $('#results').append(restaurantResultHtml);
                 } else {
                     $('#results').append(activityResultHtml);
+                    $("#date-knight-picks").show();
                 }
             });
         } else {
@@ -154,10 +152,22 @@ $(document).ready(function () {
 
     }
 
+    // Creating code to restrict number of characters in the zipcode field. 
+
+    var character_limit = 4;
+
+    $('#inputZip').keydown(function () {
+        if ($(this).val().length >= character_limit) {
+            $(this).val($(this).val().substr(0, character_limit));
+        }
+    });
+
+   
+
+
     function fetchResults(input) {
 
-        // this will display the Activity input field and the "Click here to select a Date Activity" button
-        $("#save").show();
+        
 
         // display the map div
         $("#map").show();
@@ -165,17 +175,20 @@ $(document).ready(function () {
         // display the results wrapper div
         $("#results-wrapper").show();
 
-
+// remove the "enter zip code" message div
+// $("#message-div").hide();
 
         console.log("button clicked")
         zipcode = $("#inputZip").val();
-        console.log(zipcode)
+        // console.log(zipcode)
         activity = $("#activity-input").val();
         cuisine = $("#cuisine-input").val();
 
         if (activity == "Choose...") {
             input = cuisine;
             resultType = "restaurant";
+            // this will display the Activity input field and the "Click here to select a Date Activity" button
+            $("#next-pick-an-activity").show();
         } else {
             input = activity;
             resultType = "activity";
@@ -221,45 +234,45 @@ $(document).ready(function () {
 
                 });
 
-                database.ref('users/'+ uid +'/restaurants').on("child_added", function (child) {
+                database.ref('users/' + uid + '/restaurants').on("child_added", function (child) {
                     console.log("PLEASE I BEG YOU TO WORK");
                     console.log(child);
                     var childAdded = child.node_.children_.root_.value.value_
-                    
+
                     userOne.push(childAdded);
                     $.each(userOne, function (i, el) {
                         if ($.inArray(el, uniqueNames) === -1) uniqueNames.push(el);
                     });
-    
+
                     console.log("new userOne", userOne);
                     console.log("new uniqueNames", uniqueNames);
                 })
 
 
-            $(".likeActivitiesButton").on("click", function () {
-                // We will push thisClicked to firebase
-                thisClicked = $(this).data("name")
-                var activitiesNameObject = {
-                    Name: thisClicked
-                };
-                //This pushes the selected Activities into Firebase folder for /activities. 
-                var rootRef = database.ref("users");
-                var activitiesRef = rootRef.child(uid);
-                activitiesRef.child("/activities").push(activitiesNameObject)
+                $(".likeActivitiesButton").on("click", function () {
+                    // We will push thisClicked to firebase
+                    thisClicked = $(this).data("name")
+                    var activitiesNameObject = {
+                        Name: thisClicked
+                    };
+                    //This pushes the selected Activities into Firebase folder for /activities. 
+                    var rootRef = database.ref("users");
+                    var activitiesRef = rootRef.child(uid);
+                    activitiesRef.child("/activities").push(activitiesNameObject)
 
-            });
+                });
 
                 //DONE: Success! Items pushed properly to the database. 
-                database.ref('users/'+ uid +'/activities').on("child_added", function (child) {
+                database.ref('users/' + uid + '/activities').on("child_added", function (child) {
                     var childAddedActivities = child.node_.children_.root_.value.value_
                     userTwo.push(childAddedActivities);
                     //userOne is variable that holds the pushed array
                     //This array will prevent duplicate items in the array from being duplicated    
-    
+
                     $.each(userTwo, function (i, elel) {
                         if ($.inArray(elel, uniqueActivities) === -1) uniqueActivities.push(elel);
                     });
-    
+
                     console.log("new userTwo activities", userTwo);
                     console.log("new userTwo unique array", uniqueActivities);
                 })
@@ -268,11 +281,12 @@ $(document).ready(function () {
                 //TODO: Clear the uniqueNames array to [];
                 $("#resetArray").on("click", function () {
                     //The below line will clear the database!
-                    database.ref().remove();
+                    database.ref('users/'+ uid).remove();
                     userOne = [];
                     userTwo = [];
                     uniqueNames = [];
                     uniqueActivities = [];
+                    window.location.reload();
                     // console.log("the current array is this after clearArray", uniqueNames)
                 })
 
@@ -288,7 +302,9 @@ $(document).ready(function () {
 
                 //TODO: Have the date knight picka  random thing and output it. 
                 $("#pickDate").on("click", function () {
-
+                    $("#results-wrapper").hide();
+                    $("#input-container").hide();
+                    $("#instructions").hide();
                     var dkPickRestaurant = uniqueNames[Math.floor(Math.random() * uniqueNames.length)];
                     $("#dkRestaurantPick").text("The Restaurant you should eat at is: " + dkPickRestaurant);
                     var dkPickActivity = uniqueActivities[Math.floor(Math.random() * uniqueActivities.length)];
@@ -316,16 +332,23 @@ $(document).ready(function () {
         $("#inputZip").val("");
         $("#activity-input").prop("selectedIndex", 0);
         $("#cuisine-input").prop("selectedIndex", 0);
+        $("#results-wrapper").hide();
+        $("#next-pick-an-activity").hide();
     }
     //Leon created the dataVar and set it global to = the 'data' from the JSON object. This way he can manipulate the data within the displayMap(); function */
     var dataVar = ""
     // create a function that gets the value on click
     $("#results").empty();
-    $("#submit").on("click", fetchResults);
+    $("#submit").on("click", fetchResults );
 
 
 
     $("#submit").on("click", displayResultDiv);
+
+     
+        
+
+            
 
 
     // create a function that shifts focus on the results div
@@ -333,13 +356,22 @@ $(document).ready(function () {
         var resultDiv = document.getElementById("results");
         resultDiv.scrollIntoView();
 
+      
+// Display text when fields are blank and User click on Submit
+
+     
+if (document.getElementById("inputZip").value.length == 0) {
+    console.log("AMBREEEEEEEEN!!!!!!!!!")
+    $("#results-wrapper").hide();
+$("#message-div").text("Please Enter a Zip Code and make a selection to continue");
+}
     }
 
     function displayMap() {
         console.log("Leon's Locations var:", locations);
 
         var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 13,
+            zoom: 12,
             //DONE: The center of the maps is grabbied via the first business's latitude and longitutde coordinates. 
             center: new google.maps.LatLng(dataVar.businesses[0].coordinates.latitude, dataVar.businesses[0].coordinates.longitude),
             mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -358,10 +390,10 @@ $(document).ready(function () {
                 map: map
             });
 
-            google.maps.event.addListener(marker, 'mouseover', (function (marker, i) {
+            google.maps.event.addListener(marker, 'click', (function (marker, i) {
                 return function () {
                     markerContent =
-                    `
+                        `
                 <div id = "markerContent"> <img src ="${newMarkerImage[i]}" class = "markerImage">, 
                 <p>
                     <h5>${newMarkerName[i]}</h5><br>
@@ -371,57 +403,58 @@ $(document).ready(function () {
                     <strong># of Reviews: </strong>${newMarkerReviews[i]}</p>
                 </div>
                     `
-                infowindow.open(map, marker);
-                infowindow.setContent(markerContent);
-            }
-        })(marker, i));
+                    infowindow.open(map, marker);
+                    infowindow.setContent(markerContent);
+                }
+            })(marker, i));
         }
     };
-//Animated text
+    //Animated text
 
-$('.ml2').each(function(){
-    $(this).html($(this).text().replace(/([^\x00-\x80]|\w)/g, "<span class='letter'>$&</span>"));
-  });
-  
-  anime.timeline({loop: false})
-    .add({
-      targets: '.ml2 .letter',
-      scale: [4,1],
-      opacity: [0,1],
-      translateZ: 0,
-      easing: "easeOutExpo",
-      duration: 250,
-      delay: function(el, i) {
-        return 70*i;
-     }
-    }).add({
-      targets: '.ml2',
-      opacity: 1,
-      duration: 1000,
-    //   easing: "easeOutExpo",
-      delay: 1000
+    $('.ml2').each(function () {
+        $(this).html($(this).text().replace(/([^\x00-\x80]|\w)/g, "<span class='letter'>$&</span>"));
     });
 
-    $('.ml3').each(function(){
-        $(this).html($(this).text().replace(/([^\x00-\x80]|\w)/g, "<span class='letter'>$&</span>"));
-      });
-      
-      anime.timeline({loop: false})
+    anime.timeline({ loop: false })
         .add({
-          targets: '.ml3 .letter',
-          scale: [4,1],
-          opacity: [0,1],
-          translateZ: 0,
-          easing: "easeOutExpo",
-          duration: 1500,
-          delay: function(el, i) {
-            return 70*i;
-         }
+            targets: '.ml2 .letter',
+            scale: [4, 1],
+            opacity: [0, 1],
+            translateZ: 0,
+            easing: "easeOutExpo",
+            duration: 250,
+            delay: function (el, i) {
+                return 70 * i;
+            }
         }).add({
-          targets: '.ml3',
-          opacity: 1,
-          duration: 1000,
-        //   easing: "easeOutExpo",
-          delay: 1000
+            targets: '.ml2',
+            opacity: 1,
+            duration: 1000,
+            //   easing: "easeOutExpo",
+            delay: 1000
+        });
+
+    $('.ml3').each(function () {
+        $(this).html($(this).text().replace(/([^\x00-\x80]|\w)/g, "<span class='letter'>$&</span>"));
+    });
+
+    anime.timeline({ loop: false })
+        .add({
+            targets: '.ml3 .letter',
+            scale: [4, 1],
+            opacity: [0, 1],
+            translateZ: 0,
+            easing: "easeOutExpo",
+            duration: 1500,
+            delay: function (el, i) {
+                return 70 * i;
+            }
+        }).add({
+            targets: '.ml3',
+            opacity: 1,
+            duration: 1000,
+            //   easing: "easeOutExpo",
+            delay: 1000
         });
 });
+

@@ -89,7 +89,9 @@ h3 {
     font-size: 40px;
     font-family: 'Uncial Antiqua', cursive;
     color: #84C318;
+    text-align: center;
 }
+
 
 .form-group {
     margin: 10px auto;
@@ -130,6 +132,12 @@ h3 {
     color: purple;
 }
 
+.next {
+    text-align: center;
+    color: #84C318;
+    font-family: 'Uncial Antiqua', cursive;
+}
+
 .btn {
     margin: 10px 10px 10px 0;
     color: #84C318;
@@ -139,6 +147,18 @@ h3 {
 
 .btn:hover {
     background-color: #84C318;
+    color: purple;
+}
+
+#pick-activity-btn {
+    font-size: 20px;
+    height: 75px;
+    width: 200px;
+}
+
+#pick-activity-btn:hover {
+    background-color: #84C318;
+    color: purple;
 }
 
 
@@ -154,27 +174,12 @@ h3 {
     color: white;
 }
 
+.date-knight-picks {
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+}
 
-/* Animated knight*/
-/* #myContainer {
-    width: 400px;
-    height: 400px;
-    position: relative;
-    background: yellow;
-  }
-  
-  #myAnimation {
-    width: 50px;
-    height: 50px;
-    position: absolute;
-    background: red;
-  } */
 
-/* cursor*/
-
-/* .module {
-    cursor: url('../images/Cursor.png'), auto;	
-  } */
 
   .ml2, .ml3 {
     font-weight: 900;
@@ -200,6 +205,14 @@ h3 {
   
 
   .markerImage {
-      height: 100px;
+      height: 135px;
       width: auto;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+
   }
+
+#message-div {
+color: red;    
+}

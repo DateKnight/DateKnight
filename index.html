@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+    <!-- mobile responsive -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
@@ -30,9 +32,7 @@
             <nav class="navbar">
                 <a class="navbar-brand" href="#">
                     <img src="images/tempknight.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
-                    <!-- <h1 class="ml2">DateKnight</h1> -->
-
-
+                    <h1 class="navbar-brand">DateKnight</h1>
                 </a>
             </nav>
         </header>
@@ -51,21 +51,16 @@
             </div>
 
         </div>
-
-
-        <!--Animated Knight-->
-        <!-- <div id ="myContainer">
-    <div id ="myAnimation">My animation will go here</div>
-</div> -->
-
-
-        <div class="input-container">
+        <div class="instructions" id="instructions">
             <h3>
                 Let the Date Knight plan your date!
             </h3>
+        </div>
+
+        <div class="input-container" id="input-container">
             <div class="inputs">
                 <div class="form-group">
-                    <input type="text" class="form-control" id="inputZip" placeholder="Zip Code">
+                    <input type="text" class="form-control" id="inputZip" placeholder="Zip Code" max="5" min="0">
                 </div>
                 <div class="input-group mb-3" id="activity-div">
                     <div class="input-group-prepend">
@@ -79,44 +74,66 @@
                         <option value="escaperoom">Escape Room</option>
                         <option value="art">Art</option>
                         <option value="theatre">Theatre</option>
+                        <option value="bikerental">Bike Rental</option>
+                        <option value="yachts">Yacht Rental</option>
+                        <option value="helicopter">Helicopter Tours</option>
+                        <option value="skydiving">Skydiving</option>
+
 
                     </select>
                 </div>
                 <div class="input-group mb-3" id="cuisine-div">
+
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="restaurant-input">Cuisine</label>
                     </div>
+
                     <select class="custom-select" id="cuisine-input">
                         <option selected id="null-text" class="menu">Choose...</option>
                         <option value="Thai">Thai</option>
                         <option value="Hamburgers">Hamburgers</option>
                         <option value="Italian">Italian</option>
+                        <option value="Chinese">Chinese</option>
+                        <option value="Russian">Russian</option>
+                        <option value="Indian">Indian</option>
+                        <option value="Vegan">Vegan</option>
+                        <option value="Brunch">Brunch</option>
+                        <option value="BBQ">BBQ</option>
+                        <option value="Pakistani">Pakistani</option>
+
                     </select>
+
                 </div>
+
+                <div id="message-div"></div>
                 <a class="btn btn-primary btn-sm" type="submit" id="submit">Submit</a>
                 <a class="btn btn-primary btn-sm" type="reset" id="reset">Reset</a>
-                <a class="btn btn-primary btn-sm" type="save" id="save">Click here to select a Date Activity</a>
             </div>
-            <div class="container" id="results-wrapper">
-                <div class="announce-results" id="announce-results"></div>
-                <div class="row">
-                    <div class="results col-4" id="results"></div>
-                    <div id="map" class="col-6"></div>
-                </div>
-            </div>
-            <div class="date-knight-picks" id="date-knight-picks">
-                <button id="pickDate" class="pickDate">DATE PICKER</button>
-                <button id="resetArray" class="resetArray">Reset Array</button>
-                <br>
-                <div class="resultsDiv">The Date Knight Picks:</div>
-                <br>
-                <div id="dkRestaurantPick" class="resultsDiv"></div>
-                <div id="dkActivityPick" class="resultsDiv"></div>
-            </div>
-
-
-            <!-- <a class="btn btn-primary btn-lg" type="save" id="save">Click here to select a Date Activity</a> -->
         </div>
+        <div class="container" id="results-wrapper">
+            <div class="announce-results" id="announce-results"></div>
+            <div class="row">
+                <div class="results col-4" id="results"></div>
+                <div id="map" class="col-6"></div>
+            </div>
+        </div>
+        <div class="next" id="next-pick-an-activity">
+            <h4>Next, let's look at some ACTIVITIES to do on your date:</h4>
+            <a class="btn btn-primary btn-sm" type="save" id="pick-activity-btn">FIND ACTIVITIES</a>
+        </div>
+
+        <div class="date-knight-picks" id="date-knight-picks">
+            <h3>Now, let the Date Knight Decide!</h3>
+            <button id="pickDate" class="pickDate">DATE PICKER</button>
+            <button id="resetArray" class="resetArray">Don't like your date options? Click here to try again!</button>
+            <br>
+            <div class="resultsDiv">The Date Knight Picks:</div>
+            <br>
+            <div id="dkRestaurantPick" class="resultsDiv"></div>
+            <div id="dkActivityPick" class="resultsDiv"></div>
+        </div>
+
+
         <div id="modal-content"></div>
 
     </div>
