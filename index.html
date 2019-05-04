@@ -51,7 +51,7 @@
             </div>
 
         </div>
-        <div class="instructions">
+        <div class="instructions" id="instructions">
             <h3>
                 Let the Date Knight plan your date!
             </h3>
@@ -83,11 +83,11 @@
                     </select>
                 </div>
                 <div class="input-group mb-3" id="cuisine-div">
-                    
+
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="restaurant-input">Cuisine</label>
                     </div>
-                    
+
                     <select class="custom-select" id="cuisine-input">
                         <option selected id="null-text" class="menu">Choose...</option>
                         <option value="Thai">Thai</option>
@@ -102,9 +102,9 @@
                         <option value="Pakistani">Pakistani</option>
 
                     </select>
-                    
+
                 </div>
-              
+
                 <div id="message-div"></div>
                 <a class="btn btn-primary btn-sm" type="submit" id="submit">Submit</a>
                 <a class="btn btn-primary btn-sm" type="reset" id="reset">Reset</a>
@@ -123,8 +123,9 @@
         </div>
 
         <div class="date-knight-picks" id="date-knight-picks">
+            <h3>Now, let the Date Knight Decide!</h3>
             <button id="pickDate" class="pickDate">DATE PICKER</button>
-            <button id="resetArray" class="resetArray">Don't like your activity? Click here to try again!</button>
+            <button id="resetArray" class="resetArray">Don't like your date options? Click here to try again!</button>
             <br>
             <div class="resultsDiv">The Date Knight Picks:</div>
             <br>

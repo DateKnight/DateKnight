@@ -64,6 +64,7 @@ $(document).ready(function () {
 
         $("#cuisine-div").hide();
         $("#activity-div").show();
+
         resetResults();
     });
     //created function to render results
@@ -166,8 +167,7 @@ $(document).ready(function () {
 
     function fetchResults(input) {
 
-        // this will display the Activity input field and the "Click here to select a Date Activity" button
-        $("#next-pick-an-activity").show();
+        
 
         // display the map div
         $("#map").show();
@@ -187,6 +187,8 @@ $(document).ready(function () {
         if (activity == "Choose...") {
             input = cuisine;
             resultType = "restaurant";
+            // this will display the Activity input field and the "Click here to select a Date Activity" button
+            $("#next-pick-an-activity").show();
         } else {
             input = activity;
             resultType = "activity";
@@ -300,7 +302,9 @@ $(document).ready(function () {
 
                 //TODO: Have the date knight picka  random thing and output it. 
                 $("#pickDate").on("click", function () {
-
+                    $("#results-wrapper").hide();
+                    $("#input-container").hide();
+                    $("#instructions").hide();
                     var dkPickRestaurant = uniqueNames[Math.floor(Math.random() * uniqueNames.length)];
                     $("#dkRestaurantPick").text("The Restaurant you should eat at is: " + dkPickRestaurant);
                     var dkPickActivity = uniqueActivities[Math.floor(Math.random() * uniqueActivities.length)];
@@ -328,6 +332,8 @@ $(document).ready(function () {
         $("#inputZip").val("");
         $("#activity-input").prop("selectedIndex", 0);
         $("#cuisine-input").prop("selectedIndex", 0);
+        $("#results-wrapper").hide();
+        $("#next-pick-an-activity").hide();
     }
     //Leon created the dataVar and set it global to = the 'data' from the JSON object. This way he can manipulate the data within the displayMap(); function */
     var dataVar = ""
@@ -357,7 +363,7 @@ $(document).ready(function () {
 if (document.getElementById("inputZip").value.length == 0) {
     console.log("AMBREEEEEEEEN!!!!!!!!!")
     $("#results-wrapper").hide();
-$("#message-div").text("Please Enter a Zip Code and select a cuisine to continue");
+$("#message-div").text("Please Enter a Zip Code and make a selection to continue");
 }
     }
 

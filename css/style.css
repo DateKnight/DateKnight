@@ -93,7 +93,6 @@ h3 {
 }
 
 
-
 .form-group {
     margin: 10px auto;
     width: 20%;
@@ -175,6 +174,10 @@ h3 {
     color: white;
 }
 
+.date-knight-picks {
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+}
 
 
 
